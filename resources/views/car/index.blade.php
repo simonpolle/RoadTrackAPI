@@ -53,32 +53,28 @@
                                             <tbody>
                                             @foreach($cars as $car)
                                                 <tr>
-                                                    @foreach($users as $user)
-                                                        @if($car->user_id == $user->id)
-                                                        <td>{{ $user->first_name }} {{ $user->last_name }} </td>
-                                                        @endif
-                                                    @endforeach
+                                                    <td>{{ $car->user->first_name }} {{ $car->user->last_name }} </td>
                                                     <td>{{ $car->licence_plate }}</td>
-                                                        <td>
-                                                            <form role="form" method="POST"
-                                                                  action="{{ url('/car/edit') }}">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" name="id" value="{{ $car->id }}">
-                                                                <button type="submit" class="btn btn-warning"><span
-                                                                            class="glyphicon glyphicon-edit"></span>
-                                                                </button>
-                                                            </form>
-                                                        </td>
-                                                        <td>
-                                                            <form role="form" method="POST"
-                                                                  action="{{ url('/car/delete') }}">
-                                                                {{ csrf_field() }}
-                                                                <input type="hidden" name="id" value="{{ $car->id }}">
-                                                                <button type="submit" class="btn btn-danger"><span
-                                                                            class="glyphicon glyphicon-remove"></span>
-                                                                </button>
-                                                            </form>
-                                                        </td>
+                                                    <td>
+                                                        <form role="form" method="POST"
+                                                              action="{{ URL::route('car.edit') }}">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="id" value="{{ $car->id }}">
+                                                            <button type="submit" class="btn btn-warning"><span
+                                                                        class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <form role="form" method="POST"
+                                                              action="{{ URL::route('car.destroy') }}">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="id" value="{{ $car->id }}">
+                                                            <button type="submit" class="btn btn-danger"><span
+                                                                        class="glyphicon glyphicon-remove"></span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

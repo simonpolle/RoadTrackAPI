@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Models;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\route\EditDeleteRouteRequest;
+use App\Http\Requests\route\StoreUpdateRouteRequest;
 use App\Models\Car;
 use App\Models\Route;
 use Illuminate\Foundation\Auth\User;
@@ -19,9 +21,7 @@ class RouteController extends Controller
     public function index()
     {
         return view('route.index', [
-            'routes' => Route::all(),
-            'users' => DB::table('users')->where('role_id', 1)->get(),
-            'cars' => Car::all()
+            'routes' => Route::all()
         ]);
     }
 
@@ -32,7 +32,6 @@ class RouteController extends Controller
      */
     public function create()
     {
-
         return view('route.create', [
             'users' => DB::table('users')->where('role_id', 1)->get(),
         ]);
@@ -41,10 +40,10 @@ class RouteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreRouteRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateRouteRequest $request)
     {
         // Validate the request...
         $route = new Route;
@@ -55,11 +54,7 @@ class RouteController extends Controller
         $route->total_cost = $request->total_cost;
         $route->save();
 
-        return view('route.index', [
-            'routes' => Route::all(),
-            'users' => DB::table('users')->where('role_id', 1)->get(),
-            'cars' => Car::all()
-        ]);
+        return redirect()->route('route.index');
     }
 
     /**
@@ -80,7 +75,7 @@ class RouteController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit(Request $request)
+    public function edit(EditDeleteRouteRequest $request)
     {
         return view('route.edit', [
             'route' => Route::find($request->id),
@@ -95,7 +90,7 @@ class RouteController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function update(Request $request)
+    public function update(StoreUpdateRouteRequest $request)
     {
         $route = Route::find($request->id);
         $route->user_id = $request->user_id;
@@ -105,11 +100,7 @@ class RouteController extends Controller
         $route->total_cost = $request->total_cost;
         $route->save();
 
-        return view('route.index', [
-            'routes' => Route::all(),
-            'users' => DB::table('users')->where('role_id', 1)->get(),
-            'cars' => Car::all()
-        ]);
+        return redirect()->route('route.index');
     }
 
     /**
@@ -119,15 +110,11 @@ class RouteController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function destroy(Request $request)
+    public function destroy(EditDeleteRouteRequest $request)
     {
         $route = Route::where('id', $request->id);
         $route->delete();
 
-        return view('route.index', [
-            'routes' => Route::all(),
-            'users' => DB::table('users')->where('role_id', 1)->get(),
-            'cars' => Car::all()
-        ]);
+        return redirect()->route('route.index');
     }
 }

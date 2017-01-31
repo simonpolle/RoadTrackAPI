@@ -60,26 +60,13 @@
 
                                             @foreach($routes as $route)
                                                 <tr>
-                                                    @foreach($users as $user)
-                                                        @if($route->user_id == $user->id)
-                                                            <td>{{ $user->first_name }} {{ $user->last_name }} </td>
-                                                        @endif
-                                                    @endforeach
-
-                                                    @foreach($cars as $car)
-                                                        @if($route->car_id == $car->id)
-                                                            <td>{{ $car->licence_plate }}</td>
-                                                        @endif
-                                                    @endforeach
-                                                    <td>
-                                                        {{ $route->distance_travelled }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $route->total_cost }}
-                                                    </td>
+                                                    <td>{{ $route->user->first_name }} {{ $route->user->last_name }} </td>
+                                                    <td>{{ $route->car->licence_plate }}</td>
+                                                    <td>{{ $route->distance_travelled }}</td>
+                                                    <td>{{ $route->total_cost }}</td>
                                                     <td>
                                                         <form role="form" method="POST"
-                                                              action="{{ url('/route/edit') }}">
+                                                              action="{{ route('route.edit') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $route->id }}">
                                                             <button type="submit" class="btn btn-warning"><span
@@ -89,7 +76,7 @@
                                                     </td>
                                                     <td>
                                                         <form role="form" method="POST"
-                                                              action="{{ url('/route/delete') }}">
+                                                              action="{{ URL::route('route.destroy') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $route->id }}">
                                                             <button type="submit" class="btn btn-danger"><span

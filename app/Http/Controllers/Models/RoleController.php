@@ -42,9 +42,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->save();
 
-        return view('role.index', [
-            'roles' => Role::all()
-        ]);
+        return redirect()->route('role.index');
     }
 
     /**
@@ -84,9 +82,7 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->save();
 
-        return view('role.index', [
-            'roles' => Role::all()
-        ]);
+        return redirect()->route('role.index');
     }
 
     /**
@@ -100,8 +96,6 @@ class RoleController extends Controller
         $role = Role::where('id', $request->id);
         $role->delete();
 
-        return view('role.index', [
-            'roles' => Role::all()
-        ]);
+        return redirect()->route('role.index');
     }
 }

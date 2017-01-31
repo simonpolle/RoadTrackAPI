@@ -17,7 +17,7 @@ class CreateRoutesTable extends Migration
             $table->increments('id');
             $table->string('user_id')->references('id')->on('users');
             $table->string('car_id')->references('id')->on('cars');
-            $table->integer('distance_travelled');
+            $table->double('distance_travelled');
             $table->double('total_cost');
             $table->timestamps();
         });

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Models;
 
+use App\Http\Requests\Car\StoreUpdateCarRequest;
+use App\Http\Requests\Route\EditDeleteRouteRequest;
 use App\Models\Car;
 use App\Http\Controllers\Controller;
+use App\Models\Route;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
@@ -17,8 +20,7 @@ class CarController extends Controller
     public function index()
     {
         return view('car.index', [
-            'cars' => Car::all(),
-            'users' => User::all()
+            'cars' => Car::all()
         ]);
     }
 
@@ -40,7 +42,7 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCarRequest $request)
     {
         // Validate the request...
         $car = new Car;
@@ -48,10 +50,7 @@ class CarController extends Controller
         $car->user_id = $request->user_id;
         $car->save();
 
-        return view('car.index', [
-            'cars' => Car::all(),
-            'users' => User::all()
-        ]);
+        return redirect()->route('car.index');
     }
 
     /**
@@ -73,7 +72,7 @@ class CarController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit(Request $request)
+    public function edit(EditDeleteRouteRequest $request)
     {
         return view('car.edit', [
             'car' => Car::find($request->id),
@@ -88,17 +87,14 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(StoreUpdateCarRequest $request)
     {
         $car = Car::find($request->id);
         $car->licence_plate = $request->licence_plate;
         $car->user_id = $request->user_id;
         $car->save();
 
-        return view('car.index', [
-            'cars' => Car::all(),
-            'users' => User::all()
-        ]);
+        return redirect()->route('car.index');
     }
 
     /**
@@ -108,14 +104,12 @@ class CarController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function destroy(Request $request)
+    public function destroy(EditDeleteRouteRequest $request)
     {
         $car = Car::where('id', $request->id);
         $car->delete();
+        Route::where('car_id', $request->id)->delete();
 
-        return view('car.index', [
-            'cars' => Car::all(),
-            'users' => User::all()
-        ]);
+        return redirect()->route('car.index');
     }
 }

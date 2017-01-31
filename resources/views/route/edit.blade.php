@@ -26,7 +26,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{ url('/route/update') }}">
+                        <form role="form" method="POST" action="{{ URL::route('route.update') }}">
                             {{ csrf_field() }}
                             <div class="box-body">
                                 <div class="form-group">

@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'simon.polle@student.ehb.be',
             'password' => bcrypt('secret'),
             'role_id' => '1',
-            'company_id' => '1'
+            'company_id' => '1',
+            'api_token' => str_random(60)
         ]);
 
         DB::table('users')->insert([
@@ -27,7 +28,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@admin.be',
             'password' => bcrypt('secret'),
             'role_id' => '3 ',
-            'company_id' => '2'
+            'company_id' => '2',
+            'api_token' => str_random(60)
         ]);
     }
 }

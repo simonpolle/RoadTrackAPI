@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model
@@ -12,11 +13,11 @@ class Car extends Model
 
     public function route()
     {
-        return $this->hasMany('App\Models\Route');
+        return $this->hasMany(Route::class);
     }
 
     public function user()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

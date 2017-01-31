@@ -18,8 +18,7 @@ class CompanyController extends Controller
     public function index()
     {
         return view('company.index', [
-            'companies' => Company::all(),
-            'users' => User::all()
+            'companies' => Company::all()
         ]);
     }
 
@@ -53,6 +52,8 @@ class CompanyController extends Controller
         $company->vat_number = $request->vat_number;
         $company->user_id = $request->user_id;
         $company->save();
+
+        return redirect()->route('company.index');
     }
 
     /**
@@ -101,10 +102,7 @@ class CompanyController extends Controller
         $company->user_id = $request->user_id;
         $company->save();
 
-        return view('company.index', [
-            'companies' => Company::all(),
-            'users' => User::all()
-        ]);
+        return redirect()->route('company.index');
     }
 
     /**
@@ -118,9 +116,6 @@ class CompanyController extends Controller
         $company = Company::where('id', $request->id);
         $company->delete();
 
-        return view('company.index', [
-            'companies' => Company::all(),
-            'users' => User::all()
-        ]);
+        return redirect()->route('company.index');
     }
 }

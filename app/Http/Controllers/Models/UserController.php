@@ -34,7 +34,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('user.create', [
+            'users' => User::all(),
+            'roles' => Role::all(),
+            'companies' => Company::all()
+        ]);
     }
 
     /**
@@ -45,7 +49,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $user = new User;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $password = $request->password;
+        $user->password = bcrypt($password);
+        $user->role_id = $request->role_id;
+        $user->company_id = $request->company_id;
+        $user->api_token = str_random(60);
 
+        $user->save();
     }
 
     /**

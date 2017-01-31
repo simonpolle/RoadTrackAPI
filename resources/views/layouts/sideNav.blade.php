@@ -14,7 +14,7 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview">
-                <a href="{{ url('/dashboard') }}">
+                <a href="{{ route('home') }}">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     <span class="pull-right-container">
             </span>
@@ -29,8 +29,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{ url('/user') }}"><i class="fa fa-table"></i> All users</a></li>
-                    <li class="active"><a href="{{ url('/user/create') }}"><i class="fa fa-edit"></i> Create user</a></li>
+                    <li class="active"><a href="{{ route('user.index') }}"><i class="fa fa-table"></i> All users</a></li>
+                    <li class="active"><a href="{{ route('user.create') }}"><i class="fa fa-edit"></i> Create user</a></li>
                 </ul>
             </li>
 
@@ -42,8 +42,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{ url('/car') }}"><i class="fa fa-table"></i> All cars</a></li>
-                    <li class="active"><a href="{{ url('/car/create') }}"><i class="fa fa-edit"></i> Create car</a></li>
+                    <li class="active"><a href="{{ route('car.index') }}"><i class="fa fa-table"></i> All cars</a></li>
+                    <li class="active"><a href="{{ route('car.create') }}"><i class="fa fa-edit"></i> Create car</a></li>
                 </ul>
             </li>
 
@@ -55,8 +55,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{ url('/route') }}"><i class="fa fa-table"></i> All routes</a></li>
-                    <li class="active"><a href="{{ url('/route/create') }}"><i class="fa fa-edit"></i> Create route</a></li>
+                    <li class="active"><a href="{{ route('route.index') }}"><i class="fa fa-table"></i> All routes</a></li>
+                    <li class="active"><a href="{{ route('route.create') }}"><i class="fa fa-edit"></i> Create route</a></li>
                 </ul>
             </li>
 
@@ -68,8 +68,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{ url('/company') }}"><i class="fa fa-table"></i> All companies</a></li>
-                    <li class="active"><a href="{{ url('/company/create') }}"><i class="fa fa-edit"></i> Create company</a></li>
+                    <li class="active"><a href="{{ route('company.index') }}"><i class="fa fa-table"></i> All companies</a></li>
+                    <li class="active"><a href="{{ route('company.create') }}"><i class="fa fa-edit"></i> Create company</a></li>
                 </ul>
             </li>
 
@@ -81,8 +81,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{ url('/role') }}"><i class="fa fa-table"></i> All roles</a></li>
-                    <li class="active"><a href="{{ url('/role/create') }}"><i class="fa fa-edit"></i> Create role</a></li>
+                    <li class="active"><a href="{{ route('role.index') }}"><i class="fa fa-table"></i> All roles</a></li>
+                    <li class="active"><a href="{{ route('role.create') }}"><i class="fa fa-edit"></i> Create role</a></li>
                 </ul>
             </li>
         </ul>

@@ -59,23 +59,19 @@
                                             <tbody>
                                             @foreach($companies as $company)
                                                 <tr>
-                                                    @foreach($users as $user)
-                                                        @if($company->user_id == $user->id)
-                                                            <td>{{ $user->first_name }} {{ $user->last_name }} </td>
-                                                        @endif
-                                                    @endforeach
+                                                    <td>{{ $company->user->first_name }} {{ $company->user->last_name }} </td>
                                                     <td>{{ $company->name }}</td>
                                                     <td>{{ $company->street }} {{ $company->number }} {{ $company->postal_code }} {{ $company->country }}</td>
                                                     <td>{{ $company->vat_number }}</td>
                                                     <td>
-                                                        <form role="form" method="POST" action="{{ url('/company/edit') }}">
+                                                        <form role="form" method="POST" action="{{ URL::route('company.edit') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $company->id }}">
                                                             <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></button>
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form role="form" method="POST" action="{{ url('/company/delete') }}">
+                                                        <form role="form" method="POST" action="{{ URL::route('company.destroy') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $company->id }}">
                                                             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>

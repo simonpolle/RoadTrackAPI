@@ -26,7 +26,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{ url('/route') }}">
+                        <form role="form" method="POST" action="{{ URL::route('route.store') }}">
                             {{ csrf_field() }}
                             <div class="box-body">
                                 <div class="form-group">

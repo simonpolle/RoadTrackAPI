@@ -57,7 +57,7 @@
                                                     <td>{{ $role->name }}</td>
                                                     <td>
                                                         <form role="form" method="POST"
-                                                              action="{{ url('/role/edit') }}">
+                                                              action="{{ URL::route('role.edit') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $role->id }}">
                                                             <button type="submit" class="btn btn-warning"><span
@@ -67,7 +67,7 @@
                                                     </td>
                                                     <td>
                                                         <form role="form" method="POST"
-                                                              action="{{ url('/role/delete') }}">
+                                                              action="{{ URL::route('role.destroy') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $role->id }}">
                                                             <button type="submit" class="btn btn-danger"><span
@@ -80,6 +80,7 @@
                                             </tbody>
                                             <tfoot>
                                             <tr>
+                                                <th rowspan="1" colspan="1">ID</th>
                                                 <th rowspan="1" colspan="1">Role</th>
                                                 <th rowspan="1" colspan="1">Edit</th>
                                                 <th rowspan="1" colspan="1">Delete</th>

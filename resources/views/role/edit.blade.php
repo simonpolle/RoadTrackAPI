@@ -40,6 +40,16 @@
                             <input type="hidden" name="id" value="{{ $role->id }}">
                             <!-- /.box-body -->
 
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>

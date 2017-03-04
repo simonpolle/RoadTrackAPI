@@ -13,9 +13,11 @@
 /* @var $router \Illuminate\Contracts\Routing\Registrar */
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Middleware;
 
 Auth::routes();
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::get('/logout', function()
 {
@@ -23,10 +25,15 @@ Route::get('/logout', function()
     return Redirect::to('/login');
 })->name('logout');
 
+Route::get('/forbidden', function()
+{
+    return view('errors.403');
+})->name('forbidden');
+
 /*
  * Car routes
  */
-$router->group(['prefix' => 'car', 'namespace' => 'Models'], function () use ($router) {
+$router->group(['prefix' => 'car', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'CarController@index')->name('car.index');
     $router->get('create', 'CarController@create')->name('car.create');
     $router->post('store', 'CarController@store')->name('car.store');
@@ -38,7 +45,7 @@ $router->group(['prefix' => 'car', 'namespace' => 'Models'], function () use ($r
 /*
  * Company routes
  */
-$router->group(['prefix' => 'company', 'namespace' => 'Models'], function () use ($router) {
+$router->group(['prefix' => 'company', 'namespace' => 'Models', 'middleware' => ['admin']], function () use ($router) {
     $router->get('/', 'CompanyController@index')->name('company.index');
     $router->get('create', 'CompanyController@create')->name('company.create');
     $router->post('store', 'CompanyController@store')->name('company.store');
@@ -50,7 +57,7 @@ $router->group(['prefix' => 'company', 'namespace' => 'Models'], function () use
 /*
  * Role routes
  */
-$router->group(['prefix' => 'role', 'namespace' => 'Models'], function () use ($router) {
+$router->group(['prefix' => 'role', 'namespace' => 'Models', 'middleware' => ['admin']], function () use ($router) {
     $router->get('/', 'RoleController@index')->name('role.index');
     $router->get('create', 'RoleController@create')->name('role.create');
     $router->post('store', 'RoleController@store')->name('role.store');
@@ -62,7 +69,7 @@ $router->group(['prefix' => 'role', 'namespace' => 'Models'], function () use ($
 /*
  * Route routes
  */
-$router->group(['prefix' => 'route', 'namespace' => 'Models'], function () use ($router) {
+$router->group(['prefix' => 'route', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'RouteController@index')->name('route.index');
     $router->get('create', 'RouteController@create')->name('route.create');
     $router->post('store', 'RouteController@store')->name('route.store');
@@ -74,7 +81,7 @@ $router->group(['prefix' => 'route', 'namespace' => 'Models'], function () use (
 /*
  * User routes
  */
-$router->group(['prefix' => 'user', 'namespace' => 'Models'], function () use ($router) {
+$router->group(['prefix' => 'user', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'UserController@index')->name('user.index');
     $router->get('create', 'UserController@create')->name('user.create');
     $router->post('store', 'UserController@store')->name('user.store');

@@ -19,7 +19,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/dist/img/loginascustomer_profile.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Admin</span>
+                        <span class="hidden-xs">{{ Auth::user()->first_name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -34,10 +34,6 @@
                             </div>
                         </li>
                     </ul>
-                </li>
-                <!-- Control Sidebar Toggle Button -->
-                <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
             </ul>
         </div>

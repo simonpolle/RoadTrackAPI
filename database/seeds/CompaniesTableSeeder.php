@@ -28,7 +28,7 @@ class CompaniesTableSeeder extends Seeder
             'postal_code' => '123',
             'country' => 'Belgium',
             'vat_number' => 'x',
-            'user_id' => '2'
+            'user_id' => '4'
         ]);
     }
 }

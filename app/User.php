@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Models\Car;
+use App\Models\Company;
+use App\Models\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -29,11 +32,16 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne('App\Models\Role');
+        return $this->hasOne(Role::class);
     }
 
     public function car()
     {
-        return $this->hasOne('App\Models\Car');
+        return $this->hasOne(Car::class);
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class);
     }
 }

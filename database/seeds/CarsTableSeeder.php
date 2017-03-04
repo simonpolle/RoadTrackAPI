@@ -15,5 +15,10 @@ class CarsTableSeeder extends Seeder
             'licence_plate' => 'wdp-195',
             'user_id' => '1'
         ]);
+
+        DB::table('cars')->insert([
+            'licence_plate' => 'xml-358',
+            'user_id' => '4'
+        ]);
     }
 }

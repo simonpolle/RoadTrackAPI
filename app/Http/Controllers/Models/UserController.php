@@ -60,6 +60,7 @@ class UserController extends Controller
         $user->api_token = str_random(60);
 
         $user->save();
+        return redirect()->route('user.index');
     }
 
     /**

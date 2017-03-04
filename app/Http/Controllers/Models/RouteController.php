@@ -77,7 +77,9 @@ class RouteController extends Controller
      */
     public function edit(EditDeleteRouteRequest $request)
     {
+        $cars = Car::all();
         return view('route.edit', [
+            'cars' => $cars,
             'route' => Route::find($request->id),
             'users' => DB::table('users')->where('role_id', 1)->get(),
         ]);

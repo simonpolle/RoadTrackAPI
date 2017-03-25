@@ -1,0 +1,5 @@
+RELATIES CHECKEN
+
+- bedrijven kunnen enkel routes zien van hun gebruikers
+- admin kan alle bedrijven zien
+-

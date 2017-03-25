@@ -30,11 +30,15 @@ Route::get('/forbidden', function()
     return view('errors.403');
 })->name('forbidden');
 
+
+
 /*
  * Car routes
  */
 $router->group(['prefix' => 'car', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'CarController@index')->name('car.index');
+    $router->get('pdf', 'CarController@pdf')->name('car.pdf');
+    $router->get('excel', 'CarController@excel')->name('car.excel');
     $router->get('create', 'CarController@create')->name('car.create');
     $router->post('store', 'CarController@store')->name('car.store');
     $router->post('edit', 'CarController@edit')->name('car.edit');
@@ -47,6 +51,8 @@ $router->group(['prefix' => 'car', 'namespace' => 'Models', 'middleware' => ['co
  */
 $router->group(['prefix' => 'company', 'namespace' => 'Models', 'middleware' => ['admin']], function () use ($router) {
     $router->get('/', 'CompanyController@index')->name('company.index');
+    $router->get('pdf', 'CompanyController@pdf')->name('company.pdf');
+    $router->get('excel', 'CompanyController@excel')->name('company.excel');
     $router->get('create', 'CompanyController@create')->name('company.create');
     $router->post('store', 'CompanyController@store')->name('company.store');
     $router->post('edit', 'CompanyController@edit')->name('company.edit');
@@ -71,6 +77,8 @@ $router->group(['prefix' => 'role', 'namespace' => 'Models', 'middleware' => ['a
  */
 $router->group(['prefix' => 'route', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'RouteController@index')->name('route.index');
+    $router->get('pdf', 'RouteController@pdf')->name('route.pdf');
+    $router->get('excel', 'RouteController@excel')->name('route.excel');
     $router->get('create', 'RouteController@create')->name('route.create');
     $router->post('store', 'RouteController@store')->name('route.store');
     $router->post('edit', 'RouteController@edit')->name('route.edit');

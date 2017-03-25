@@ -35,46 +35,37 @@
                                         <table id="example2" class="table table-bordered table-hover dataTable"
                                                role="grid" aria-describedby="example2_info">
                                             <thead>
-                                            <tr role="row">
-                                                <th>
-                                                    User
-                                                </th>
-                                                <th>
-                                                    Email
-                                                </th>
-                                                <th>
-                                                    Role
-                                                </th>
-                                                <th>
-                                                    Company
-                                                </th>
-                                            </tr>
+                                                <tr role="row">
+                                                    <th>
+                                                        User
+                                                    </th>
+                                                    <th>
+                                                        Email
+                                                    </th>
+                                                    <th>
+                                                        Role
+                                                    </th>
+                                                    <th>
+                                                        Company
+                                                    </th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($users as $user)
-                                                <tr>
-                                                    <td>{{ $user->first_name }} {{ $user->last_name }} </td>
-                                                    <td>{{ $user->email }}</td>
-                                                    @foreach($roles as $role)
-                                                        @if($role->id == $user->role_id)
-                                                            <td>{{ $role->name }}</td>
-                                                        @endif
-                                                    @endforeach
-                                                    @foreach($companies as $company)
-                                                        @if($company->id == $user->company_id)
-                                                            <td>{{ $company->name }}</td>
-                                                        @endif
-                                                    @endforeach
-                                                </tr>
-                                            @endforeach
+                                                @foreach($users as $user)
+                                                    <tr>
+                                                        <td>{{ $user->first_name }} {{ $user->last_name }} </td>
+                                                        <td>{{ $user->email }}</td>
+                                                        <td>{{ $user->type }}</td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                             <tfoot>
-                                            <tr>
-                                                <th rowspan="1" colspan="1">User</th>
-                                                <th rowspan="1" colspan="1">Email</th>
-                                                <th rowspan="1" colspan="1">Role</th>
-                                                <th rowspan="1" colspan="1">Company</th>
-                                            </tr>
+                                                <tr>
+                                                    <th rowspan="1" colspan="1">User</th>
+                                                    <th rowspan="1" colspan="1">Email</th>
+                                                    <th rowspan="1" colspan="1">Role</th>
+                                                    <th rowspan="1" colspan="1">Company</th>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>

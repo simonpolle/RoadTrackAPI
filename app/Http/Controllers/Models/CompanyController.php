@@ -7,6 +7,8 @@ use App\Models\Company;
 use App\Models\Country;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
 {
@@ -20,6 +22,29 @@ class CompanyController extends Controller
         return view('company.index', [
             'companies' => Company::all()
         ]);
+    }
+
+    public function pdf(Request $request)
+    {
+        $companies = Company::all();
+        view()->share('companies', $companies);
+
+        if ($request->has('download')) {
+            $pdf = PDF::loadView('company.pdf');
+            return $pdf->download('company.pdf');
+        }
+
+        return view('company.index');
+    }
+
+    public function excel()
+    {
+        $companies = Company::all();
+        Excel::create('companies', function ($excel) use ($companies) {
+            $excel->sheet('Sheet 1', function ($sheet) use ($companies) {
+                $sheet->fromArray($companies);
+            });
+        })->download('xlsx');
     }
 
     /**

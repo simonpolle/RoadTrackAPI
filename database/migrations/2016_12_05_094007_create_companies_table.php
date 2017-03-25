@@ -21,7 +21,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('postal_code');
             $table->string('country');
             $table->string('vat_number');
-            $table->integer('user_id')->references('id')->on('users');
+            $table->string('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

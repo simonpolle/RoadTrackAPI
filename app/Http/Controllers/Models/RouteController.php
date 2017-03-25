@@ -7,9 +7,11 @@ use App\Http\Requests\route\EditDeleteRouteRequest;
 use App\Http\Requests\route\StoreUpdateRouteRequest;
 use App\Models\Car;
 use App\Models\Route;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RouteController extends Controller
 {
@@ -23,6 +25,29 @@ class RouteController extends Controller
         return view('route.index', [
             'routes' => Route::all()
         ]);
+    }
+
+    public function pdf(Request $request)
+    {
+        $routes = Route::all();
+        view()->share('routes', $routes);
+
+        if ($request->has('download')) {
+            $pdf = PDF::loadView('route.pdf');
+            return $pdf->download('routes.pdf');
+        }
+
+        return view('route.index');
+    }
+
+    public function excel()
+    {
+        $routes = Route::all();
+        Excel::create('routes', function ($excel) use ($routes) {
+            $excel->sheet('Sheet 1', function ($sheet) use ($routes) {
+                $sheet->fromArray($routes);
+            });
+        })->download('xlsx');
     }
 
     /**
@@ -60,7 +85,7 @@ class RouteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)

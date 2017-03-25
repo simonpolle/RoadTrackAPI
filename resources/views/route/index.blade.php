@@ -22,6 +22,8 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">All Routes</h3>
+                            <h7><a href="{{ route('route.pdf',['download'=>'pdf']) }}">Download PDF</a></h7>
+                            <h7><a href="{{ route('route.excel') }}">Download Excel</a></h7>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

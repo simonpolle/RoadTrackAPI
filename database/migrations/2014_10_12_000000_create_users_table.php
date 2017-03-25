@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('api_token', 60)->unique();
-            $table->integer('role_id')->references('id')->on('roles');
-            $table->integer('company_id')->references('id')->on('companies');
+            $table->string('role_id')->references('id')->on('roles');
+            $table->string('company_id')->references('id')->on('companies');
             $table->rememberToken();
             $table->timestamps();
         });

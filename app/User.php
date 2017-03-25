@@ -7,10 +7,11 @@ use App\Models\Company;
 use App\Models\Role;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -35,13 +36,9 @@ class User extends Authenticatable
         return $this->hasOne(Role::class);
     }
 
-    public function car()
-    {
-        return $this->hasOne(Car::class);
-    }
 
     public function company()
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 }

@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Route;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CarController extends Controller
 {
@@ -22,6 +24,29 @@ class CarController extends Controller
         return view('car.index', [
             'cars' => Car::all()
         ]);
+    }
+
+    public function pdf(Request $request)
+    {
+        $cars = Car::all();
+        view()->share('cars', $cars);
+
+        if ($request->has('download')) {
+            $pdf = PDF::loadView('car.pdf');
+            return $pdf->download('car.pdf');
+        }
+
+        return view('company.index');
+    }
+
+    public function excel()
+    {
+        $cars = Car::all();
+        Excel::create('cars', function ($excel) use ($cars) {
+            $excel->sheet('Sheet 1', function ($sheet) use ($cars) {
+                $sheet->fromArray($cars);
+            });
+        })->download('xlsx');
     }
 
     /**

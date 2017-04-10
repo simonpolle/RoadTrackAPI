@@ -55,7 +55,8 @@
                                                     <tr>
                                                         <td>{{ $user->first_name }} {{ $user->last_name }} </td>
                                                         <td>{{ $user->email }}</td>
-                                                        <td>{{ $user->type }}</td>
+                                                        <td>{{ $user->role->name }}</td>
+                                                        <td>{{ $user->company->name }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

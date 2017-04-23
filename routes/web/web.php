@@ -35,7 +35,7 @@ Route::get('/forbidden', function()
 /*
  * Car routes
  */
-$router->group(['prefix' => 'car', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
+$router->group(['prefix' => 'car', 'namespace' => 'Models\Web', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'CarController@index')->name('car.index');
     $router->get('pdf', 'CarController@pdf')->name('car.pdf');
     $router->get('excel', 'CarController@excel')->name('car.excel');
@@ -49,7 +49,7 @@ $router->group(['prefix' => 'car', 'namespace' => 'Models', 'middleware' => ['co
 /*
  * Company routes
  */
-$router->group(['prefix' => 'company', 'namespace' => 'Models', 'middleware' => ['admin']], function () use ($router) {
+$router->group(['prefix' => 'company', 'namespace' => 'Models\Web', 'middleware' => ['admin']], function () use ($router) {
     $router->get('/', 'CompanyController@index')->name('company.index');
     $router->get('pdf', 'CompanyController@pdf')->name('company.pdf');
     $router->get('excel', 'CompanyController@excel')->name('company.excel');
@@ -63,7 +63,7 @@ $router->group(['prefix' => 'company', 'namespace' => 'Models', 'middleware' => 
 /*
  * Role routes
  */
-$router->group(['prefix' => 'role', 'namespace' => 'Models', 'middleware' => ['admin']], function () use ($router) {
+$router->group(['prefix' => 'role', 'namespace' => 'Models\Web', 'middleware' => ['admin']], function () use ($router) {
     $router->get('/', 'RoleController@index')->name('role.index');
     $router->get('create', 'RoleController@create')->name('role.create');
     $router->post('store', 'RoleController@store')->name('role.store');
@@ -75,7 +75,7 @@ $router->group(['prefix' => 'role', 'namespace' => 'Models', 'middleware' => ['a
 /*
  * Route routes
  */
-$router->group(['prefix' => 'route', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
+$router->group(['prefix' => 'route', 'namespace' => 'Models\Web', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'RouteController@index')->name('route.index');
     $router->get('pdf', 'RouteController@pdf')->name('route.pdf');
     $router->get('excel', 'RouteController@excel')->name('route.excel');
@@ -89,7 +89,7 @@ $router->group(['prefix' => 'route', 'namespace' => 'Models', 'middleware' => ['
 /*
  * User routes
  */
-$router->group(['prefix' => 'user', 'namespace' => 'Models', 'middleware' => ['company']], function () use ($router) {
+$router->group(['prefix' => 'user', 'namespace' => 'Models\Web', 'middleware' => ['company']], function () use ($router) {
     $router->get('/', 'UserController@index')->name('user.index');
     $router->get('create', 'UserController@create')->name('user.create');
     $router->post('store', 'UserController@store')->name('user.store');

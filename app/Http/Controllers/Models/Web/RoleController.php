@@ -1,44 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Models;
+namespace App\Http\Controllers\Models\Web;
 
-use App\Models\Car;
 use App\Http\Controllers\Controller;
-use App\Models\Company;
 use App\Models\Role;
-use Illuminate\Contracts\View\View;
-use App\User;
 use Illuminate\Http\Request;
 
-
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('user.index', [
-            'users' => User::all(),
-            'roles' => Role::all(),
-            'companies' => Company::all()
+        return view('role.index', [
+            'roles' => Role::all()
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('user.create', [
-            'users' => User::all(),
-            'roles' => Role::all(),
-            'companies' => Company::all()
-        ]);
+        return view('role.create');
     }
 
     /**
@@ -49,18 +38,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $password = $request->password;
-        $user->password = bcrypt($password);
-        $user->role_id = $request->role_id;
-        $user->company_id = $request->company_id;
-        $user->api_token = str_random(60);
+        $role = new Role;
+        $role->name = $request->name;
+        $role->save();
 
-        $user->save();
-        return redirect()->route('user.index');
+        return redirect()->route('role.index');
     }
 
     /**
@@ -80,9 +62,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        return view('role.edit', [
+            'role' => Role::find($request->id)
+        ]);
     }
 
     /**
@@ -92,9 +76,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $role = Role::find($request->id);
+        $role->name = $request->name;
+        $role->save();
+
+        return redirect()->route('role.index');
     }
 
     /**
@@ -103,8 +91,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $role = Role::where('id', $request->id);
+        $role->delete();
+
+        return redirect()->route('role.index');
     }
 }

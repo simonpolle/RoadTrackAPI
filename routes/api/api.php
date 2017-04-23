@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+Route::get('/api/v1/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+/*
+ * Routes routes
+ */
+$router->group(['prefix' => 'route', 'namespace' => 'Models\Api'], function () use ($router) {
+    $router->get('/', 'RouteController@index')->name('route.index');
+    $router->get('create', 'RouteController@create')->name('route.create');
+    $router->post('store', 'RouteController@store')->name('route.store');
+});

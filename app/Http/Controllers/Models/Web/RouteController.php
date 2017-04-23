@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Models;
+namespace App\Http\Controllers\Models\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\route\EditDeleteRouteRequest;

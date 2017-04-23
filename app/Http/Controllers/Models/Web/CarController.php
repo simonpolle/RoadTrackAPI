@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Models;
+namespace App\Http\Controllers\Models\Web;
 
 use App\Http\Requests\Car\StoreUpdateCarRequest;
 use App\Http\Requests\Route\EditDeleteRouteRequest;
@@ -24,6 +24,11 @@ class CarController extends Controller
         return view('car.index', [
             'cars' => Car::all()
         ]);
+    }
+
+    public function indexAPI()
+    {
+        return Car::all();
     }
 
     public function pdf(Request $request)

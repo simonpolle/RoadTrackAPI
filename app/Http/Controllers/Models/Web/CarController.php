@@ -22,7 +22,7 @@ class CarController extends Controller
     public function index()
     {
         return view('car.index', [
-            'cars' => Car::all()
+            'cars' => Car::paginate(10)
         ]);
     }
 

@@ -42,10 +42,12 @@
                                                     User (Admin)
                                                 </th>
                                                 <th>
-                                                    Name
+                                                    Name <a href="{{ route('company.indexNameAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                    <a href="{{ route('company.indexNameDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
                                                 </th>
                                                 <th>
-                                                    Address
+                                                    Address <a href="{{ route('company.indexAddressAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                    <a href="{{ route('company.indexAddressDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
                                                 </th>
                                                 <th>
                                                     VAT Number

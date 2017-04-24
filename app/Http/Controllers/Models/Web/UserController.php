@@ -25,6 +25,34 @@ class UserController extends Controller
         ]);
     }
 
+    public function indexNameAscending()
+    {
+        return view('user.index', [
+            'users' => User::orderBy('first_name', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexNameDescending()
+    {
+        return view('user.index', [
+            'users' => User::orderBy('first_name', 'desc')->paginate(10)
+        ]);
+    }
+
+    public function indexEmailAscending()
+    {
+        return view('user.index', [
+            'users' => User::orderBy('email', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexEmailDescending()
+    {
+        return view('user.index', [
+            'users' => User::orderBy('email', 'desc')->paginate(10)
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

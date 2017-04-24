@@ -40,7 +40,8 @@
                                                     ID
                                                 </th>
                                                 <th>
-                                                    Role
+                                                    Role <a href="{{ route('role.indexNameAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                    <a href="{{ route('role.indexNameDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
                                                 </th>
                                                 <th>
                                                     Edit

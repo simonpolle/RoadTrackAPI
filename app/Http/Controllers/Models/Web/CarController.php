@@ -10,6 +10,7 @@ use App\Models\Route;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CarController extends Controller
@@ -23,6 +24,20 @@ class CarController extends Controller
     {
         return view('car.index', [
             'cars' => Car::paginate(10)
+        ]);
+    }
+
+    public function indexLicenceAscending()
+    {
+        return view('car.index', [
+            'cars' => Car::orderBy('licence_plate', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexLicenceDescending()
+    {
+        return view('car.index', [
+            'cars' => Car::orderBy('licence_plate', 'desc')->paginate(10)
         ]);
     }
 

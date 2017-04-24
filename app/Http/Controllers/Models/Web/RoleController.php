@@ -20,6 +20,34 @@ class RoleController extends Controller
         ]);
     }
 
+    public function indexNameAscending()
+    {
+        return view('role.index', [
+            'roles' => Role::orderBy('name', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexNameDescending()
+    {
+        return view('role.index', [
+            'roles' => Role::orderBy('name', 'desc')->paginate(10)
+        ]);
+    }
+
+    public function indexEmailAscending()
+    {
+        return view('role.index', [
+            'roles' => Role::orderBy('email', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexEmailDescending()
+    {
+        return view('role.index', [
+            'roles' => Role::orderBy('email', 'desc')->paginate(10)
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

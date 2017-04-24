@@ -42,7 +42,8 @@
                                                     User
                                                 </th>
                                                 <th>
-                                                    Licence plate
+                                                    Licence plate <a href="{{ route('car.indexLicenceAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                    <a href="{{ route('car.indexLicenceDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
                                                 </th>
                                                 <th>
                                                     Edit

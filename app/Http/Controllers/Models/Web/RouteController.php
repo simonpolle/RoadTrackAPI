@@ -27,6 +27,34 @@ class RouteController extends Controller
         ]);
     }
 
+    public function indexDistanceAscending()
+    {
+        return view('route.index', [
+            'routes' => Route::orderBy('distance_travelled', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexDistanceDescending()
+    {
+        return view('route.index', [
+            'routes' => Route::orderBy('distance_travelled', 'desc')->paginate(10)
+        ]);
+    }
+
+    public function indexCostAscending()
+    {
+        return view('route.index', [
+            'routes' => Route::orderBy('total_cost', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexCostDescending()
+    {
+        return view('route.index', [
+            'routes' => Route::orderBy('total_cost', 'desc')->paginate(10)
+        ]);
+    }
+
     public function pdf(Request $request)
     {
         $routes = Route::all();

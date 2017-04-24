@@ -24,6 +24,34 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function indexNameAscending()
+    {
+        return view('company.index', [
+            'companies' => Company::orderBy('name', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexNameDescending()
+    {
+        return view('company.index', [
+            'companies' => Company::orderBy('name', 'desc')->paginate(10)
+        ]);
+    }
+
+    public function indexAddressAscending()
+    {
+        return view('company.index', [
+            'companies' => Company::orderBy('street', 'asc')->paginate(10)
+        ]);
+    }
+
+    public function indexAddressDescending()
+    {
+        return view('company.index', [
+            'companies' => Company::orderBy('street', 'desc')->paginate(10)
+        ]);
+    }
+
     public function pdf(Request $request)
     {
         $companies = Company::all();

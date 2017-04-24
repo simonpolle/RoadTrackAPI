@@ -45,10 +45,12 @@
                                                     Licence plate
                                                 </th>
                                                 <th>
-                                                    Distance travelled
+                                                    Distance travelled <a href="{{ route('route.indexDistanceAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                    <a href="{{ route('route.indexDistanceDescending') }}"><i class="fa fa-sort-down"></i> </a>
                                                 </th>
                                                 <th>
-                                                    Total cost
+                                                    Total cost <a href="{{ route('route.indexCostAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                    <a href="{{ route('route.indexCostDescending') }}"><i class="fa fa-sort-down"></i> </a>
                                                 </th>
                                                 <th>
                                                     Edit

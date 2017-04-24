@@ -37,10 +37,12 @@
                                             <thead>
                                                 <tr role="row">
                                                     <th>
-                                                        User
+                                                        User <a href="{{ route('user.indexNameAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                        <a href="{{ route('user.indexNameDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
                                                     </th>
                                                     <th>
-                                                        Email
+                                                        Email <a href="{{ route('user.indexEmailAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
+                                                        <a href="{{ route('user.indexEmailDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
                                                     </th>
                                                     <th>
                                                         Role

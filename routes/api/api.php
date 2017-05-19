@@ -13,7 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/api/v1/user', function (Request $request) {
+/*
+ * Returns the authenticated user
+ */
+$router->get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
@@ -22,6 +25,14 @@ Route::get('/api/v1/user', function (Request $request) {
  */
 $router->group(['prefix' => 'route', 'namespace' => 'Models\Api'], function () use ($router) {
     $router->get('/', 'RouteController@index')->name('route.index');
+    $router->get('/{id}', 'RouteController@getById')->name('route.getById');
     $router->get('create', 'RouteController@create')->name('route.create');
     $router->post('store', 'RouteController@store')->name('route.store');
+});
+
+/*
+ * Routes routes
+ */
+$router->group(['prefix' => 'car', 'namespace' => 'Models\Api'], function () use ($router) {
+    $router->get('/{id}', 'CarController@getById')->name('car.getById');
 });

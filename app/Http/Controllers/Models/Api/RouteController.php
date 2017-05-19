@@ -19,7 +19,19 @@ class RouteController extends Controller
      */
     public function index()
     {
-        return Route::all();
+        $routes = Route::paginate(5);
+        return $routes->items();
+    }
+
+    /**
+     * Display a route by id.
+     *
+     * @param $id
+     * @return Response
+     */
+    public function getById($id)
+    {
+        return Route::find($id);
     }
 
     /**

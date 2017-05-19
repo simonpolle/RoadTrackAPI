@@ -2,12 +2,23 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Catchers\Database\NotFoundCatcher;
+use App\Exceptions\Entities\Cars\CarNotFoundException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Experus\Exceptions\Dispatcher as DispatchesExceptions;
 
 class Handler extends ExceptionHandler
 {
+    use DispatchesExceptions;
+
+    private $catchers = [
+        NotFoundCatcher::class => [
+            CarNotFoundException::class,
+        ],
+    ];
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -33,18 +44,6 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         parent::report($exception);
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
-    public function render($request, Exception $exception)
-    {
-        return parent::render($request, $exception);
     }
 
     /**

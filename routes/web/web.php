@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Middleware;
 
 Auth::routes();
-Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/logout', function()
 {

@@ -17,9 +17,9 @@ class RouteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $routes = Route::paginate(5);
+        $routes = Route::where('user_id', '=', $request->user()->id)->paginate(5);
         return $routes->items();
     }
 

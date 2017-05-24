@@ -20,6 +20,7 @@ class CarController extends Controller
      *
      * @param $id
      * @return Response
+     * @throws CarNotFoundException
      */
     public function getById($id)
     {

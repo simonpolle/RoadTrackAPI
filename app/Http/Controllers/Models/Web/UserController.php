@@ -6,11 +6,11 @@ namespace App\Http\Controllers\Models\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Role;
-use Illuminate\Contracts\View\View;
 use App\User;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -30,7 +30,8 @@ class UserController extends Controller
             return view('user.index', [
                 'users' => $users
             ]);
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             return view('user.index', [
                 'users' => User::paginate(10)
@@ -47,7 +48,8 @@ class UserController extends Controller
             return view('user.index', [
                 'users' => $users
             ]);
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             return view('user.index', [
                 'users' => User::orderBy('first_name', 'asc')->paginate(10)
@@ -64,7 +66,8 @@ class UserController extends Controller
             return view('user.index', [
                 'users' => $users
             ]);
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             return view('user.index', [
                 'users' => User::orderBy('first_name', 'desc')->paginate(10)
@@ -81,7 +84,8 @@ class UserController extends Controller
             return view('user.index', [
                 'users' => $users
             ]);
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             return view('user.index', [
                 'users' => User::orderBy('email', 'asc')->paginate(10)
@@ -98,7 +102,8 @@ class UserController extends Controller
             return view('user.index', [
                 'users' => $users
             ]);
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             return view('user.index', [
                 'users' => User::orderBy('email', 'desc')->paginate(10)
@@ -113,7 +118,8 @@ class UserController extends Controller
             $company = Company::where('id', Auth::user()->company_id)->first();
             $users = User::where('company_id', $company->id)->get();
             view()->share('users', $users);
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             $users = User::all();
             view()->share('users', $users);
@@ -130,16 +136,15 @@ class UserController extends Controller
 
     public function excel()
     {
-
         if (Auth::user()->role_id == 2)
         {
             $company = Company::where('id', Auth::user()->company_id)->first();
             $users = User::where('company_id', $company->id)->get();
-        } else if (Auth::user()->role_id == 3)
+        }
+        else if (Auth::user()->role_id == 3)
         {
             $users = User::all();
         }
-
         Excel::create('users', function ($excel) use ($users)
         {
             $excel->sheet('Sheet 1', function ($sheet) use ($users)

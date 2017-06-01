@@ -10,6 +10,7 @@ use App\Models\Route;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -22,45 +23,116 @@ class RouteController extends Controller
      */
     public function index()
     {
-        return view('route.index', [
-            'routes' => Route::paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->paginate(10);
+
+            return view('route.index', [
+                'routes' => $routes
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.index', [
+                'routes' => Route::paginate(10)
+            ]);
+        }
     }
 
     public function indexDistanceAscending()
     {
-        return view('route.index', [
-            'routes' => Route::orderBy('distance_travelled', 'asc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->orderBy('distance_travelled', 'asc')->paginate(10);
+
+            return view('route.index', [
+                'routes' => $routes
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.index', [
+                'routes' => Route::orderBy('distance_travelled', 'asc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexDistanceDescending()
     {
-        return view('route.index', [
-            'routes' => Route::orderBy('distance_travelled', 'desc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->orderBy('distance_travelled', 'desc')->paginate(10);
+
+            return view('route.index', [
+                'routes' => $routes
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.index', [
+                'routes' => Route::orderBy('distance_travelled', 'desc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexCostAscending()
     {
-        return view('route.index', [
-            'routes' => Route::orderBy('total_cost', 'asc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->orderBy('total_cost', 'asc')->paginate(10);
+
+            return view('route.index', [
+                'routes' => $routes
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.index', [
+                'routes' => Route::orderBy('total_cost', 'asc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexCostDescending()
     {
-        return view('route.index', [
-            'routes' => Route::orderBy('total_cost', 'desc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->orderBy('total_cost', 'desc')->paginate(10);
+
+            return view('route.index', [
+                'routes' => $routes
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.index', [
+                'routes' => Route::orderBy('total_cost', 'desc')->paginate(10)
+            ]);
+        }
     }
 
     public function pdf(Request $request)
     {
-        $routes = Route::all();
-        view()->share('routes', $routes);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->orderBy('total_cost', 'asc')->paginate(10);
 
-        if ($request->has('download')) {
+            view()->share('routes', $routes);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $routes = Route::all();
+            view()->share('routes', $routes);
+        }
+
+        if ($request->has('download'))
+        {
             $pdf = PDF::loadView('route.pdf');
             return $pdf->download('routes.pdf');
         }
@@ -70,9 +142,19 @@ class RouteController extends Controller
 
     public function excel()
     {
-        $routes = Route::all();
-        Excel::create('routes', function ($excel) use ($routes) {
-            $excel->sheet('Sheet 1', function ($sheet) use ($routes) {
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->orderBy('total_cost', 'asc')->get();
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $routes = Route::all();
+        }
+        Excel::create('routes', function ($excel) use ($routes)
+        {
+            $excel->sheet('Sheet 1', function ($sheet) use ($routes)
+            {
                 $sheet->fromArray($routes);
             });
         })->download('xlsx');
@@ -86,7 +168,7 @@ class RouteController extends Controller
     public function create()
     {
         return view('route.create', [
-            'users' => DB::table('users')->where('role_id', 1)->get(),
+            'users' => User::where('company_id', Auth::user()->company_id)->get(),
         ]);
     }
 
@@ -98,16 +180,38 @@ class RouteController extends Controller
      */
     public function store(StoreUpdateRouteRequest $request)
     {
-        // Validate the request...
-        $route = new Route;
-        $route->user_id = $request->user_id;
-        $car = DB::table('cars')->where('user_id', $request->user_id)->first();
-        $route->car_id = $car->id;
-        $route->distance_travelled = $request->distance_travelled;
-        $route->total_cost = $request->total_cost;
-        $route->save();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            if (!in_array($request->user_id, $users->toArray()))
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $route = new Route;
+                $route->user_id = $request->user_id;
+                $car = DB::table('cars')->where('user_id', $request->user_id)->first();
+                $route->car_id = $car->id;
+                $route->distance_travelled = $request->distance_travelled;
+                $route->total_cost = $request->total_cost;
+                $route->save();
 
-        return redirect()->route('route.index');
+                return redirect()->route('route.index');
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $route = new Route;
+            $route->user_id = $request->user_id;
+            $car = DB::table('cars')->where('user_id', $request->user_id)->first();
+            $route->car_id = $car->id;
+            $route->distance_travelled = $request->distance_travelled;
+            $route->total_cost = $request->total_cost;
+            $route->save();
+
+            return redirect()->route('route.index');
+        }
     }
 
     /**
@@ -130,12 +234,25 @@ class RouteController extends Controller
      */
     public function edit(EditDeleteRouteRequest $request)
     {
-        $cars = Car::all();
-        return view('route.edit', [
-            'cars' => $cars,
-            'route' => Route::find($request->id),
-            'users' => DB::table('users')->where('role_id', 1)->get(),
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+            $route = Route::find($request->id);
+
+            return view('route.edit', [
+                'users' => $users,
+                'route' => $route,
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $cars = Car::all();
+            return view('route.edit', [
+                'cars' => $cars,
+                'route' => Route::find($request->id),
+                'users' => DB::table('users')->where('role_id', 1)->get(),
+            ]);
+        }
     }
 
     /**
@@ -147,15 +264,40 @@ class RouteController extends Controller
      */
     public function update(StoreUpdateRouteRequest $request)
     {
-        $route = Route::find($request->id);
-        $route->user_id = $request->user_id;
-        $car = DB::table('cars')->where('user_id', $request->user_id)->first();
-        $route->car_id = $car->id;
-        $route->distance_travelled = $request->distance_travelled;
-        $route->total_cost = $request->total_cost;
-        $route->save();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->pluck('id');
 
-        return redirect()->route('route.index');
+            if (!in_array($request->id, $routes->toArray()) || !in_array($request->user_id, $users->toArray()))
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $route = Route::find($request->id);
+                $route->user_id = $request->user_id;
+                $car = DB::table('cars')->where('user_id', $request->user_id)->first();
+                $route->car_id = $car->id;
+                $route->distance_travelled = $request->distance_travelled;
+                $route->total_cost = $request->total_cost;
+                $route->save();
+
+                return redirect()->route('route.index');
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $route = Route::find($request->id);
+            $route->user_id = $request->user_id;
+            $car = DB::table('cars')->where('user_id', $request->user_id)->first();
+            $route->car_id = $car->id;
+            $route->distance_travelled = $request->distance_travelled;
+            $route->total_cost = $request->total_cost;
+            $route->save();
+
+            return redirect()->route('route.index');
+        }
     }
 
     /**
@@ -167,9 +309,29 @@ class RouteController extends Controller
      */
     public function destroy(EditDeleteRouteRequest $request)
     {
-        $route = Route::where('id', $request->id);
-        $route->delete();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->pluck('id');
 
-        return redirect()->route('route.index');
+            if (!in_array($request->id, $routes->toArray()))
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $route = Route::where('id', $request->id);
+                $route->delete();
+
+                return redirect()->route('route.index');
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $route = Route::where('id', $request->id);
+            $route->delete();
+
+            return redirect()->route('route.index');
+        }
     }
 }

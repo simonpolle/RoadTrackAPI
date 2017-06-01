@@ -37,69 +37,78 @@
                                         <table id="example2" class="table table-bordered table-hover dataTable"
                                                role="grid" aria-describedby="example2_info">
                                             <thead>
-                                            <tr role="row">
-                                                <th>
-                                                    User
-                                                </th>
-                                                <th>
-                                                    Licence plate
-                                                </th>
-                                                <th>
-                                                    Distance travelled <a href="{{ route('route.indexDistanceAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
-                                                    <a href="{{ route('route.indexDistanceDescending') }}"><i class="fa fa-sort-down"></i> </a>
-                                                </th>
-                                                <th>
-                                                    Total cost <a href="{{ route('route.indexCostAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
-                                                    <a href="{{ route('route.indexCostDescending') }}"><i class="fa fa-sort-down"></i> </a>
-                                                </th>
-                                                <th>
-                                                    Edit
-                                                </th>
-                                                <th>
-                                                    Delete
-                                                </th>
-                                            </tr>
+                                                <tr role="row">
+                                                    <th>
+                                                        User
+                                                    </th>
+                                                    <th>
+                                                        Licence plate
+                                                    </th>
+                                                    <th>
+                                                        Distance travelled <a
+                                                                href="{{ route('route.indexDistanceAscending') }}"
+                                                                style="margin-left:1%;margin-right:1% "><i
+                                                                    class="fa fa-sort-up"></i> </a>
+                                                        <a href="{{ route('route.indexDistanceDescending') }}"><i
+                                                                    class="fa fa-sort-down"></i> </a>
+                                                    </th>
+                                                    <th>
+                                                        Total cost <a href="{{ route('route.indexCostAscending') }}"
+                                                                      style="margin-left:1%;margin-right:1% "><i
+                                                                    class="fa fa-sort-up"></i> </a>
+                                                        <a href="{{ route('route.indexCostDescending') }}"><i
+                                                                    class="fa fa-sort-down"></i> </a>
+                                                    </th>
+                                                    <th>
+                                                        Edit
+                                                    </th>
+                                                    <th>
+                                                        Delete
+                                                    </th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-
-                                            @foreach($routes as $route)
-                                                <tr>
-                                                    <td>{{ $route->user->first_name }} {{ $route->user->last_name }} </td>
-                                                    <td>{{ $route->car->licence_plate }}</td>
-                                                    <td>{{ number_format($route->distance_travelled, 2) }} km</td>
-                                                    <td>{{ number_format($route->total_cost, 2) }} €</td>
-                                                    <td>
-                                                        <form role="form" method="POST"
-                                                              action="{{ route('route.edit') }}">
-                                                            {{ csrf_field() }}
-                                                            <input type="hidden" name="id" value="{{ $route->id }}">
-                                                            <button type="submit" class="btn btn-warning"><span
-                                                                        class="glyphicon glyphicon-edit"></span>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                    <td>
-                                                        <form role="form" method="POST"
-                                                              action="{{ URL::route('route.destroy') }}">
-                                                            {{ csrf_field() }}
-                                                            <input type="hidden" name="id" value="{{ $route->id }}">
-                                                            <button type="submit" class="btn btn-danger"><span
-                                                                        class="glyphicon glyphicon-remove"></span>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                @foreach($routes as $route)
+                                                    <tr>
+                                                        <td>{{ $route->user->first_name }} {{ $route->user->last_name }} </td>
+                                                        <td>{{ $route->car->licence_plate }}</td>
+                                                        <td>{{ number_format($route->distance_travelled, 2) }}km
+                                                        </td>
+                                                        <td>{{ number_format($route->total_cost, 2) }} €</td>
+                                                        <td>
+                                                            <form role="form" method="POST"
+                                                                  action="{{ route('route.edit') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $route->id }}">
+                                                                <button type="submit" class="btn btn-warning"><span
+                                                                            class="glyphicon glyphicon-edit"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" method="POST"
+                                                                  action="{{ URL::route('route.destroy') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $route->id }}">
+                                                                <button type="submit" class="btn btn-danger"><span
+                                                                            class="glyphicon glyphicon-remove"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                             <tfoot>
-                                            <tr>
-                                                <th rowspan="1" colspan="1">User</th>
-                                                <th rowspan="1" colspan="1">Licence plate</th>
-                                                <th rowspan="1" colspan="1">Distance travelled</th>
-                                                <th rowspan="1" colspan="1">Total cost</th>
-                                                <th rowspan="1" colspan="1">Edit</th>
-                                                <th rowspan="1" colspan="1">Delete</th>
-                                            </tr>
+                                                <tr>
+                                                    <th rowspan="1" colspan="1">User</th>
+                                                    <th rowspan="1" colspan="1">Licence plate</th>
+                                                    <th rowspan="1" colspan="1">Distance travelled</th>
+                                                    <th rowspan="1" colspan="1">Total cost</th>
+                                                    <th rowspan="1" colspan="1">Edit</th>
+                                                    <th rowspan="1" colspan="1">Delete</th>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>

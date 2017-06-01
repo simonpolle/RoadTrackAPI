@@ -22,7 +22,7 @@
                     <!-- general form elements -->
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Edit car</h3>
+                            <h3 class="box-title">Edit route</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -33,29 +33,31 @@
                                     <label>User</label>
                                     <select class="form-control" name="user_id">
                                         @foreach($users as $user)
-                                            @foreach($cars as $car)
-                                                @if($user->id == $car->user_id)
-                                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
-                                                @endif
-                                            @endforeach
+                                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="InputDistance">Distance travelled</label>
-                                    <input type="text" class="form-control" id="distance_travelled"
+                                    <input type="number" min="1" max="10000" class="form-control"
+                                           id="distance_travelled"
                                            name="distance_travelled" value="{{ $route->distance_travelled }}"
                                            placeholder="distance travelled"
                                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
-                                           autocomplete="off">
+                                           autocomplete="off"
+                                           pattern="[0-9]+([\.,][0-9]+)?"
+                                           step="0.01">
                                 </div>
                                 <div class="form-group">
                                     <label for="InputTotalCost">Total cost</label>
-                                    <input type="text" class="form-control" id="total_cost" name="total_cost"
+                                    <input type="number" min="1" max="1000" class="form-control"
+                                           name="total_cost"
                                            value="{{ $route->total_cost }}"
                                            placeholder="total cost"
                                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
-                                           autocomplete="off">
+                                           autocomplete="off"
+                                           pattern="[0-9]+([\.,][0-9]+)?"
+                                           step="0.01">
                                 </div>
                             </div>
                             <input type="hidden" name="id" value="{{ $route->id }}">

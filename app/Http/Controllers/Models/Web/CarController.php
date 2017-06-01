@@ -272,10 +272,28 @@ class CarController extends Controller
      */
     public function destroy(EditDeleteRouteRequest $request)
     {
-        $car = Car::where('id', $request->id);
-        $car->delete();
-        Route::where('car_id', $request->id)->delete();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->pluck('id');
+            if (!in_array($request->id, $cars->toArray()))
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $car = Car::where('id', $request->id);
+                $car->delete();
+                Route::where('car_id', $request->id)->delete();
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $car = Car::where('id', $request->id);
+            $car->delete();
+            Route::where('car_id', $request->id)->delete();
 
-        return redirect()->route('car.index');
+            return redirect()->route('car.index');
+        }
     }
 }

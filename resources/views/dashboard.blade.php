@@ -91,7 +91,7 @@
 
                                         <div class="product-info">
                                             <a class="product-title">{{ $user->first_name }} {{ $user->last_name }}
-                                                <span class="label label-danger pull-right">€{{ $recent_route->total_cost }}</span></a>
+                                                <span class="label label-danger pull-right">€ {{ number_format($recent_route->total_cost, 2) }}</span></a>
                                             <span class="product-description">{{ $recent_route->distance_travelled }}
                                                 km</span>
                                         </div>

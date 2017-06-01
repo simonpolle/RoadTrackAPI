@@ -3,11 +3,13 @@
 namespace App\Exceptions;
 
 use App\Exceptions\Catchers\Database\NotFoundCatcher;
+use App\Exceptions\Catchers\ValidationCatcher;
 use App\Exceptions\Entities\Cars\CarNotFoundException;
 use Exception;
+use Experus\Exceptions\Dispatcher as DispatchesExceptions;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Experus\Exceptions\Dispatcher as DispatchesExceptions;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -17,6 +19,13 @@ class Handler extends ExceptionHandler
         NotFoundCatcher::class => [
             CarNotFoundException::class,
         ],
+        ValidationCatcher::class => [
+            ValidationException::class,
+        ]
+    ];
+
+    protected $blacklist = [
+        \Illuminate\Auth\AuthenticationException::class,
     ];
 
     /**
@@ -30,7 +39,6 @@ class Handler extends ExceptionHandler
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
         \Illuminate\Session\TokenMismatchException::class,
-        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**

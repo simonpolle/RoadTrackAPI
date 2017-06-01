@@ -42,13 +42,14 @@ class HomeController extends Controller
             }
 
             $total_cost = 0;
-            $routes = Route::all();
+            $user_ids = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $user_ids)->get();
             foreach ($routes as $route) {
                 $total_cost += $route->total_cost;
             }
-            $users_count = User::all()->count();
-            $routes = Route::all()->count();
-            $recent_routes = Route::all()->take(4);
+            $users_count = User::where('company_id', Auth::user()->company_id)->get()->count();
+            $routes = Route::whereIn('user_id', $user_ids)->count();
+            $recent_routes = Route::whereIn('user_id', $user_ids)->get()->take(4);
             $users = User::all();
 
             return view('dashboard', [

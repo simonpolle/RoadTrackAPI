@@ -1,7 +1,9 @@
 ²+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Faker\Factory as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,6 +14,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create('nl_NL');
+
         /* Users */
         DB::table('users')->insert([
             'first_name' => 'Simon',
@@ -20,7 +24,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('secret'),
             'role_id' => '1',
             'company_id' => '1',
-            'api_token' => str_random(60)
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('users')->insert([
@@ -28,20 +32,76 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Gennar',
             'email' => 'wannes.gennar@student.ehb.be',
             'password' => bcrypt('secret'),
-            'role_id' => '1 ',
+            'role_id' => '1',
             'company_id' => '1',
-            'api_token' => str_random(60)
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
+        for ($i=0; $i < 10; $i++) {
+            DB::table('users')->insert([
+                'first_name' => $faker->firstName($gender = null | 'male' | 'female'),
+                'last_name' => $faker->lastName,
+                'email' => $faker->safeEmail,
+                'password' => bcrypt('secret'),
+                'role_id' => '1',
+                'company_id' => '1',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+
+        for ($i=0; $i < 10; $i++) {
+            DB::table('users')->insert([
+                'first_name' => $faker->firstName($gender = null | 'male' | 'female'),
+                'last_name' => $faker->lastName,
+                'email' => $faker->safeEmail,
+                'password' => bcrypt('secret'),
+                'role_id' => '1',
+                'company_id' => '2',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+
+        for ($i=0; $i < 10; $i++) {
+            DB::table('users')->insert([
+                'first_name' => $faker->firstName($gender = null | 'male' | 'female'),
+                'last_name' => $faker->lastName,
+                'email' => $faker->safeEmail,
+                'password' => bcrypt('secret'),
+                'role_id' => '1',
+                'company_id' => '3',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
 
         /* Companies */
         DB::table('users')->insert([
-            'first_name' => 'Dealloc',
-            'last_name' => 'Devcave',
-            'email' => 'dealloc@devcave.be',
+            'first_name' => $faker->firstName($gender = null | 'male' | 'female'),
+            'last_name' => $faker->lastName,
+            'email' => 'admin@ehb.be',
             'password' => bcrypt('secret'),
             'role_id' => '2 ',
             'company_id' => '1',
-            'api_token' => str_random(60)
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('users')->insert([
+            'first_name' => $faker->firstName($gender = null | 'male' | 'female'),
+            'last_name' => $faker->lastName,
+            'email' => 'admin@realdolmen.be',
+            'password' => bcrypt('secret'),
+            'role_id' => '2 ',
+            'company_id' => '2',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('users')->insert([
+            'first_name' => $faker->firstName($gender = null | 'male' | 'female'),
+            'last_name' => $faker->lastName,
+            'email' => 'admin@vub.be',
+            'password' => bcrypt('secret'),
+            'role_id' => '2 ',
+            'company_id' => '3',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         /* Admin */
@@ -52,7 +112,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('secret'),
             'role_id' => '3 ',
             'company_id' => '2',
-            'api_token' => str_random(60)
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 }

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Models\Web;
 
-use App\Models\Car;
+
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Role;
 use Illuminate\Contracts\View\View;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class UserController extends Controller
@@ -20,37 +23,130 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index', [
-            'users' => User::paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->paginate(10);
+            return view('user.index', [
+                'users' => $users
+            ]);
+        } else if (Auth::user()->role_id == 3)
+        {
+            return view('user.index', [
+                'users' => User::paginate(10)
+            ]);
+        }
     }
 
     public function indexNameAscending()
     {
-        return view('user.index', [
-            'users' => User::orderBy('first_name', 'asc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->orderBy('first_name', 'asc')->paginate(10);
+            return view('user.index', [
+                'users' => $users
+            ]);
+        } else if (Auth::user()->role_id == 3)
+        {
+            return view('user.index', [
+                'users' => User::orderBy('first_name', 'asc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexNameDescending()
     {
-        return view('user.index', [
-            'users' => User::orderBy('first_name', 'desc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->orderBy('first_name', 'desc')->paginate(10);
+            return view('user.index', [
+                'users' => $users
+            ]);
+        } else if (Auth::user()->role_id == 3)
+        {
+            return view('user.index', [
+                'users' => User::orderBy('first_name', 'desc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexEmailAscending()
     {
-        return view('user.index', [
-            'users' => User::orderBy('email', 'asc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->orderBy('email', 'asc')->paginate(10);
+            return view('user.index', [
+                'users' => $users
+            ]);
+        } else if (Auth::user()->role_id == 3)
+        {
+            return view('user.index', [
+                'users' => User::orderBy('email', 'asc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexEmailDescending()
     {
-        return view('user.index', [
-            'users' => User::orderBy('email', 'desc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->orderBy('email', 'desc')->paginate(10);
+            return view('user.index', [
+                'users' => $users
+            ]);
+        } else if (Auth::user()->role_id == 3)
+        {
+            return view('user.index', [
+                'users' => User::orderBy('email', 'desc')->paginate(10)
+            ]);
+        }
+    }
+
+    public function pdf(Request $request)
+    {
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->get();
+            view()->share('users', $users);
+        } else if (Auth::user()->role_id == 3)
+        {
+            $users = User::all();
+            view()->share('users', $users);
+        }
+
+        if ($request->has('download'))
+        {
+            $pdf = PDF::loadView('user.pdf');
+            return $pdf->download('users.pdf');
+        }
+
+        return view('user.index');
+    }
+
+    public function excel()
+    {
+
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $users = User::where('company_id', $company->id)->get();
+        } else if (Auth::user()->role_id == 3)
+        {
+            $users = User::all();
+        }
+
+        Excel::create('users', function ($excel) use ($users)
+        {
+            $excel->sheet('Sheet 1', function ($sheet) use ($users)
+            {
+                $sheet->fromArray($users);
+            });
+        })->download('xlsx');
     }
 
     /**
@@ -61,16 +157,15 @@ class UserController extends Controller
     public function create()
     {
         return view('user.create', [
-            'users' => User::all(),
-            'roles' => Role::all(),
-            'companies' => Company::all()
+            'roles' => Role::where('name', '<>', 'admin')->get(),
+            'companies' => Company::where('id', Auth::user()->company_id)->get()
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -83,7 +178,6 @@ class UserController extends Controller
         $user->password = bcrypt($password);
         $user->role_id = $request->role_id;
         $user->company_id = $request->company_id;
-        $user->api_token = str_random(60);
 
         $user->save();
         return redirect()->route('user.index');
@@ -92,7 +186,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -103,7 +197,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -114,8 +208,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -126,7 +220,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

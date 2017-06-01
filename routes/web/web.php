@@ -107,6 +107,8 @@ $router->group(['prefix' => 'user', 'namespace' => 'Models\Web', 'middleware' =>
     $router->get('/name/desc', 'UserController@indexNameDescending')->name('user.indexNameDescending');
     $router->get('/email/asc', 'UserController@indexEmailAscending')->name('user.indexEmailAscending');
     $router->get('/email/desc', 'UserController@indexEmailDescending')->name('user.indexEmailDescending');
+    $router->get('pdf', 'UserController@pdf')->name('user.pdf');
+    $router->get('excel', 'UserController@excel')->name('user.excel');
     $router->get('create', 'UserController@create')->name('user.create');
     $router->post('store', 'UserController@store')->name('user.store');
     $router->post('edit', 'UserController@edit')->name('user.edit');

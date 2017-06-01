@@ -81,6 +81,9 @@
                 <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <ul class="products-list product-list-in-box">
+                        @if($routes == 0)
+                            There are currently no routes
+                        @endif
                         @foreach($recent_routes as $recent_route)
                             @foreach($users as $user)
                                 @if($recent_route->user_id == $user->id)
@@ -100,9 +103,11 @@
                     </ul>
                 </div>
                 <!-- /.box-body -->
+                @if($routes > 0)
                 <div class="box-footer text-center" style="display: block;">
                     <a href="{{ URL::route('route.index') }}" class="uppercase">View All Routes</a>
                 </div>
+                @endif
                 <!-- /.box-footer -->
             </div>
         </section>

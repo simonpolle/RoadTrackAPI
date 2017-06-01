@@ -105,6 +105,7 @@ class CompanyController extends Controller
         $company->vat_number = $request->vat_number;
         $company->user_id = $request->user_id;
         $company->save();
+        $company->user()->save(\App\User::find($request->user_id));
 
         return redirect()->route('company.index');
     }

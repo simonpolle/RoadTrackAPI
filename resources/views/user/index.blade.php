@@ -22,6 +22,8 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">All users</h3>
+                            <h7><a href="{{ route('user.pdf',['download'=>'pdf']) }}">Download PDF</a></h7>
+                            <h7><a href="{{ route('user.excel') }}">Download Excel</a></h7>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -37,12 +39,18 @@
                                             <thead>
                                                 <tr role="row">
                                                     <th>
-                                                        User <a href="{{ route('user.indexNameAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('user.indexNameDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
+                                                        User <a href="{{ route('user.indexNameAscending') }}"
+                                                                style="margin-left:1%;margin-right:1% "><i
+                                                                    class="fa fa-sort-up"></i> </a>
+                                                        <a href="{{ route('user.indexNameDescending') }}"><i
+                                                                    class="fa fa-sort-alpha-desc"></i> </a>
                                                     </th>
                                                     <th>
-                                                        Email <a href="{{ route('user.indexEmailAscending') }}" style="margin-left:1%;margin-right:1% "><i class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('user.indexEmailDescending') }}"><i class="fa fa-sort-alpha-desc"></i> </a>
+                                                        Email <a href="{{ route('user.indexEmailAscending') }}"
+                                                                 style="margin-left:1%;margin-right:1% "><i
+                                                                    class="fa fa-sort-up"></i> </a>
+                                                        <a href="{{ route('user.indexEmailDescending') }}"><i
+                                                                    class="fa fa-sort-alpha-desc"></i> </a>
                                                     </th>
                                                     <th>
                                                         Role
@@ -58,7 +66,11 @@
                                                         <td>{{ $user->first_name }} {{ $user->last_name }} </td>
                                                         <td>{{ $user->email }}</td>
                                                         <td>{{ $user->role->name }}</td>
-                                                        <td>{{ $user->company->name }}</td>
+                                                        @if($user->company != null)
+                                                            <td>{{ $user->company->name }}</td>
+                                                        @else
+                                                            <td>None</td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>

@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('nl_NL');
+        $faker = Faker::create();
 
         /* Users */
         DB::table('users')->insert([

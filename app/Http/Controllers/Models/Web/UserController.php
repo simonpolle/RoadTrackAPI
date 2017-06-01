@@ -170,17 +170,43 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $password = $request->password;
-        $user->password = bcrypt($password);
-        $user->role_id = $request->role_id;
-        $user->company_id = $request->company_id;
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->pluck('id');
+            $role = Role::find($request->role_id);
+            if (!in_array($request->company_id, $company->toArray()) || $role->name == 'admin')
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $user = new User;
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                $password = $request->password;
+                $user->password = bcrypt($password);
+                $user->role_id = $request->role_id;
+                $user->company_id = $request->company_id;
+                $user->save();
 
-        $user->save();
-        return redirect()->route('user.index');
+                return redirect()->route('user.index');
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $user = new User;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $password = $request->password;
+            $user->password = bcrypt($password);
+            $user->role_id = $request->role_id;
+            $user->company_id = $request->company_id;
+            $user->save();
+
+            return redirect()->route('user.index');
+        }
     }
 
     /**

@@ -10,7 +10,9 @@ use App\Models\Route;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CarController extends Controller
@@ -22,36 +24,74 @@ class CarController extends Controller
      */
     public function index()
     {
-        return view('car.index', [
-            'cars' => Car::paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->paginate(10);
+            return view('car.index', [
+                'cars' => $cars
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('car.index', [
+                'cars' => Car::paginate(10)
+            ]);
+        }
     }
 
     public function indexLicenceAscending()
     {
-        return view('car.index', [
-            'cars' => Car::orderBy('licence_plate', 'asc')->paginate(10)
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->orderBy('licence_plate', 'asc')->paginate(10);
+            return view('car.index', [
+                'cars' => $cars
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('car.index', [
+                'cars' => Car::orderBy('licence_plate', 'asc')->paginate(10)
+            ]);
+        }
     }
 
     public function indexLicenceDescending()
     {
-        return view('car.index', [
-            'cars' => Car::orderBy('licence_plate', 'desc')->paginate(10)
-        ]);
-    }
-
-    public function indexAPI()
-    {
-        return Car::all();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->orderBy('licence_plate', 'desc')->paginate(10);
+            return view('car.index', [
+                'cars' => $cars
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('car.index', [
+                'cars' => Car::orderBy('licence_plate', 'desc')->paginate(10)
+            ]);
+        }
     }
 
     public function pdf(Request $request)
     {
-        $cars = Car::all();
-        view()->share('cars', $cars);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->orderBy('licence_plate', 'desc')->paginate(10);
+            view()->share('cars', $cars);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $cars = Car::all();
+            view()->share('cars', $cars);
+        }
 
-        if ($request->has('download')) {
+        if ($request->has('download'))
+        {
             $pdf = PDF::loadView('car.pdf');
             return $pdf->download('car.pdf');
         }
@@ -61,12 +101,30 @@ class CarController extends Controller
 
     public function excel()
     {
-        $cars = Car::all();
-        Excel::create('cars', function ($excel) use ($cars) {
-            $excel->sheet('Sheet 1', function ($sheet) use ($cars) {
-                $sheet->fromArray($cars);
-            });
-        })->download('xlsx');
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->orderBy('licence_plate', 'desc')->get();
+
+            Excel::create('cars', function ($excel) use ($cars)
+            {
+                $excel->sheet('Sheet 1', function ($sheet) use ($cars)
+                {
+                    $sheet->fromArray($cars);
+                });
+            })->download('xlsx');
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $cars = Car::all();
+            Excel::create('cars', function ($excel) use ($cars)
+            {
+                $excel->sheet('Sheet 1', function ($sheet) use ($cars)
+                {
+                    $sheet->fromArray($cars);
+                });
+            })->download('xlsx');
+        }
     }
 
     /**
@@ -76,32 +134,62 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('car.create', [
-            'users' => User::all()
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+
+            return view('car.create', [
+                'users' => $users
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('car.create', [
+                'users' => User::all()
+            ]);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUpdateCarRequest $request)
     {
-        // Validate the request...
-        $car = new Car;
-        $car->licence_plate = $request->licence_plate;
-        $car->user_id = $request->user_id;
-        $car->save();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            if (!in_array($request->user_id, $users->toArray()))
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $car = new Car;
+                $car->licence_plate = $request->licence_plate;
+                $car->user_id = $request->user_id;
+                $car->save();
 
-        return redirect()->route('car.index');
+                return redirect()->route('car.index');
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $car = new Car;
+            $car->licence_plate = $request->licence_plate;
+            $car->user_id = $request->user_id;
+            $car->save();
+
+            return redirect()->route('car.index');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -119,27 +207,60 @@ class CarController extends Controller
      */
     public function edit(EditDeleteRouteRequest $request)
     {
-        return view('car.edit', [
-            'car' => Car::find($request->id),
-            'users' => User::all()
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            $car = Car::find($request->id);
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+
+            return view('car.edit', [
+                'car' => $car,
+                'users' => $users
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $car = Car::find($request->id);
+            return view('car.edit', [
+                'car' => $car,
+                'users' => User::where('id', $car->user_id)->get()
+            ]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(StoreUpdateCarRequest $request)
     {
-        $car = Car::find($request->id);
-        $car->licence_plate = $request->licence_plate;
-        $car->user_id = $request->user_id;
-        $car->save();
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->pluck('id');
+            if (!in_array($request->id, $cars->toArray()) || !in_array($request->user_id, $users->toArray()))
+            {
+                return redirect()->route('forbidden');
+            }
+            else
+            {
+                $car = Car::find($request->id);
+                $car->licence_plate = $request->licence_plate;
+                $car->user_id = $request->user_id;
+                $car->save();
+            }
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            $car = Car::find($request->id);
+            $car->licence_plate = $request->licence_plate;
+            $car->user_id = $request->user_id;
+            $car->save();
 
-        return redirect()->route('car.index');
+            return redirect()->route('car.index');
+        }
     }
 
     /**

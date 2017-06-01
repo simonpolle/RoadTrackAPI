@@ -33,7 +33,7 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>€ {{ $total_cost }}</h3>
+                            <h3>€ {{ number_format($total_cost, 2) }}</h3>
                             <p>Total Cost</p>
                         </div>
                         <a href="{{ URL::route('route.index') }}" class="small-box-footer">More info <i

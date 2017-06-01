@@ -14,7 +14,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Middleware;
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
@@ -43,7 +42,7 @@ $router->group(['prefix' => 'car', 'namespace' => 'Models\Web', 'middleware' => 
     $router->get('excel', 'CarController@excel')->name('car.excel');
     $router->get('create', 'CarController@create')->name('car.create');
     $router->post('store', 'CarController@store')->name('car.store');
-    $router->post('edit', 'CarController@edit')->name('car.edit');
+    $router->get('edit', 'CarController@edit')->name('car.edit');
     $router->post('update', 'CarController@update')->name('car.update');
     $router->post('destroy', 'CarController@destroy')->name('car.destroy');
 });
@@ -61,7 +60,7 @@ $router->group(['prefix' => 'company', 'namespace' => 'Models\Web', 'middleware'
     $router->get('excel', 'CompanyController@excel')->name('company.excel');
     $router->get('create', 'CompanyController@create')->name('company.create');
     $router->post('store', 'CompanyController@store')->name('company.store');
-    $router->post('edit', 'CompanyController@edit')->name('company.edit');
+    $router->get('edit', 'CompanyController@edit')->name('company.edit');
     $router->post('update', 'CompanyController@update')->name('company.update');
     $router->post('destroy', 'CompanyController@destroy')->name('company.destroy');
 });

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Models\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Company\EditDeleteCompanyRequest;
+use App\Http\Requests\Company\StoreUpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Country;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CompanyController extends Controller
@@ -24,6 +26,11 @@ class CompanyController extends Controller
         ]);
     }
 
+    /**
+     * Sorts the resource ascending by name
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexNameAscending()
     {
         return view('company.index', [
@@ -31,6 +38,11 @@ class CompanyController extends Controller
         ]);
     }
 
+    /**
+     * Sorts the resource descending by name
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexNameDescending()
     {
         return view('company.index', [
@@ -38,6 +50,11 @@ class CompanyController extends Controller
         ]);
     }
 
+    /**
+     * Sorts the resource ascending by street
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexAddressAscending()
     {
         return view('company.index', [
@@ -45,6 +62,11 @@ class CompanyController extends Controller
         ]);
     }
 
+    /**
+     * Sorts the resource descending by street
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function indexAddressDescending()
     {
         return view('company.index', [
@@ -52,6 +74,12 @@ class CompanyController extends Controller
         ]);
     }
 
+    /**
+     * Generates and downloads a pdf file from the resource
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function pdf(Request $request)
     {
         $companies = Company::all();
@@ -65,6 +93,9 @@ class CompanyController extends Controller
         return view('company.index');
     }
 
+    /**
+     * Generates and downloads an excel file from the resource
+     */
     public function excel()
     {
         $companies = Company::all();
@@ -91,10 +122,10 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreUpdateCompanyRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCompanyRequest $request)
     {
         $company = new Company;
         $company->name = $request->name;
@@ -124,11 +155,12 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Request $request
+     * @param EditDeleteCompanyRequest $request
      * @return \Illuminate\Http\Response
+     * @internal param $EditDeleteCompanyRequest
      * @internal param int $id
      */
-    public function edit(Request $request)
+    public function edit(EditDeleteCompanyRequest $request)
     {
         return view('company.edit', [
             'company' => Company::find($request->id),
@@ -140,11 +172,11 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request)
+    public function update(StoreUpdateCompanyRequest $request)
     {
         $company = Company::find($request->id);
         $company->name = $request->name;
@@ -162,10 +194,11 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param EditDeleteCompanyRequest $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy(Request $request)
+    public function destroy(EditDeleteCompanyRequest $request)
     {
         $company = Company::where('id', $request->id);
         $company->delete();

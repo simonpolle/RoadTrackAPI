@@ -59,7 +59,7 @@
                                                     <td>{{ $car->user->first_name }} {{ $car->user->last_name }} </td>
                                                     <td>{{ $car->licence_plate }}</td>
                                                     <td>
-                                                        <form role="form" method="POST"
+                                                        <form role="form" method="GET"
                                                               action="{{ URL::route('car.edit') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $car->id }}">

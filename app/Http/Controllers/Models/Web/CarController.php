@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Models\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Car\StoreUpdateCarRequest;
 use App\Http\Requests\Route\EditDeleteRouteRequest;
 use App\Models\Car;
-use App\Http\Controllers\Controller;
 use App\Models\Route;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CarController extends Controller
@@ -250,6 +248,8 @@ class CarController extends Controller
                 $car->licence_plate = $request->licence_plate;
                 $car->user_id = $request->user_id;
                 $car->save();
+
+                return redirect()->route('car.index');
             }
         }
         else if (Auth::user()->role_id == 3)

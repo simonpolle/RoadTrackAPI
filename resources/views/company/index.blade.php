@@ -68,7 +68,8 @@
                                                     <td>{{ $company->street }} {{ $company->number }} {{ $company->postal_code }} {{ $company->country }}</td>
                                                     <td>{{ $company->vat_number }}</td>
                                                     <td>
-                                                        <form role="form" method="POST" action="{{ URL::route('company.edit') }}">
+                                                        <form role="form" method="GET"
+                                                              action="{{ URL::route('company.edit') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $company->id }}">
                                                             <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></button>

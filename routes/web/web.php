@@ -74,7 +74,7 @@ $router->group(['prefix' => 'role', 'namespace' => 'Models\Web', 'middleware' =>
     $router->get('/name/desc', 'RoleController@indexNameDescending')->name('role.indexNameDescending');
     $router->get('create', 'RoleController@create')->name('role.create');
     $router->post('store', 'RoleController@store')->name('role.store');
-    $router->post('edit', 'RoleController@edit')->name('role.edit');
+    $router->get('edit', 'RoleController@edit')->name('role.edit');
     $router->post('update', 'RoleController@update')->name('role.update');
     $router->post('destroy', 'RoleController@destroy')->name('role.destroy');
 });
@@ -92,7 +92,7 @@ $router->group(['prefix' => 'route', 'namespace' => 'Models\Web', 'middleware' =
     $router->get('excel', 'RouteController@excel')->name('route.excel');
     $router->get('create', 'RouteController@create')->name('route.create');
     $router->post('store', 'RouteController@store')->name('route.store');
-    $router->post('edit', 'RouteController@edit')->name('route.edit');
+    $router->get('edit', 'RouteController@edit')->name('route.edit');
     $router->post('update', 'RouteController@update')->name('route.update');
     $router->post('destroy', 'RouteController@destroy')->name('route.destroy');
 });
@@ -110,7 +110,7 @@ $router->group(['prefix' => 'user', 'namespace' => 'Models\Web', 'middleware' =>
     $router->get('excel', 'UserController@excel')->name('user.excel');
     $router->get('create', 'UserController@create')->name('user.create');
     $router->post('store', 'UserController@store')->name('user.store');
-    $router->post('edit', 'UserController@edit')->name('user.edit');
+    $router->get('edit', 'UserController@edit')->name('user.edit');
     $router->post('update', 'UserController@update')->name('user.update');
     $router->post('destroy', 'UserController@destroy')->name('user.destroy');
 });

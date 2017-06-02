@@ -59,19 +59,18 @@
                                            pattern="[0-9]+([\.,][0-9]+)?"
                                            step="0.01">
                                 </div>
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                             <input type="hidden" name="id" value="{{ $route->id }}">
                             <!-- /.box-body -->
-
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>

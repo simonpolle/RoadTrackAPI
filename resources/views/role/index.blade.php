@@ -57,7 +57,7 @@
                                                     <td>{{ $role->id }}</td>
                                                     <td>{{ $role->name }}</td>
                                                     <td>
-                                                        <form role="form" method="POST"
+                                                        <form role="form" method="GET"
                                                               action="{{ URL::route('role.edit') }}">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="id" value="{{ $role->id }}">

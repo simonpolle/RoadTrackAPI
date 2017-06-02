@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Models\Web;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EditDeleteUserRequest;
+use App\Http\Requests\User\StoreUpdateUserRequest;
 use App\Models\Company;
 use App\Models\Role;
 use App\User;
@@ -170,10 +172,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StoreUpdateUserRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateUserRequest $request)
     {
         if (Auth::user()->role_id == 2)
         {
@@ -239,11 +241,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param StoreUpdateUserRequest|Request $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateUserRequest $request)
     {
         //
     }
@@ -251,10 +253,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param EditDeleteUserRequest $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(EditDeleteUserRequest $request)
     {
         //
     }

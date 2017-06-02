@@ -13,7 +13,7 @@ class EditDeleteRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class EditDeleteRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required|integer|exists:roles,id'
         ];
     }
 }

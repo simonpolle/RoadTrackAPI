@@ -76,7 +76,7 @@
                                                         </td>
                                                         <td>{{ number_format($route->total_cost, 2) }} €</td>
                                                         <td>
-                                                            <form role="form" method="POST"
+                                                            <form role="form" method="GET"
                                                                   action="{{ route('route.edit') }}">
                                                                 {{ csrf_field() }}
                                                                 <input type="hidden" name="id"

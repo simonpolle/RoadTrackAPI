@@ -24,7 +24,7 @@ class StoreUpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|alpha_spaces',
             'street' => 'required',
             'street_number' => 'required|numeric',
             'postal_code' => 'required|digits:4',

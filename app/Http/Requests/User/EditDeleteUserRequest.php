@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Route;
+namespace App\Http\Requests\User;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class EditDeleteRouteRequest extends FormRequest
+class EditDeleteUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +22,7 @@ class EditDeleteRouteRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|exists:routes,id'
+            'id' => 'required|integer|exists:users,id'
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Models\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\StoreUpdateRoleRequest;
+use App\Http\Requests\Route\EditDeleteRouteRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -61,10 +63,10 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StoreUpdateRoleRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateRoleRequest $request)
     {
         $role = new Role;
         $role->name = $request->name;
@@ -87,10 +89,11 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param EditDeleteRouteRequest $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit(Request $request)
+    public function edit(EditDeleteRouteRequest $request)
     {
         return view('role.edit', [
             'role' => Role::find($request->id)
@@ -100,11 +103,11 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param StoreUpdateRoleRequest|Request $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request)
+    public function update(StoreUpdateRoleRequest $request)
     {
         $role = Role::find($request->id);
         $role->name = $request->name;
@@ -116,10 +119,11 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param EditDeleteRouteRequest $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy(Request $request)
+    public function destroy(EditDeleteRouteRequest $request)
     {
         $role = Role::where('id', $request->id);
         $role->delete();

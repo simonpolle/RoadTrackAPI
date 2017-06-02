@@ -46,6 +46,8 @@
                                                                     class="fa fa-sort-alpha-desc"></i> </a>
                                                     </th>
                                                     <th>
+                                                    </th>
+                                                    <th>
                                                         Email <a href="{{ route('user.indexEmailAscending') }}"
                                                                  style="margin-left:1%;margin-right:1% "><i
                                                                     class="fa fa-sort-up"></i> </a>
@@ -63,7 +65,13 @@
                                             <tbody>
                                                 @foreach($users as $user)
                                                     <tr>
-                                                        <td>{{ $user->first_name }} {{ $user->last_name }} </td>
+                                                        <td>
+                                                            {{ $user->first_name }} {{ $user->last_name }}
+                                                        </td>
+                                                        <td>
+                                                            <img src="{{$user->image }}"
+                                                                 alt="User Image" width="50" height="50">
+                                                        </td>
                                                         <td>{{ $user->email }}</td>
                                                         <td>{{ $user->role->name }}</td>
                                                         @if($user->company != null)
@@ -77,6 +85,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <th rowspan="1" colspan="1">User</th>
+                                                    <th rowspan="1" colspan="1"></th>
                                                     <th rowspan="1" colspan="1">Email</th>
                                                     <th rowspan="1" colspan="1">Role</th>
                                                     <th rowspan="1" colspan="1">Company</th>

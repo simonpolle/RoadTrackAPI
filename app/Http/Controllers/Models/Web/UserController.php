@@ -193,6 +193,7 @@ class UserController extends Controller
                 $user->email = $request->email;
                 $password = $request->password;
                 $user->password = bcrypt($password);
+                $user->image = $request->image;
                 $user->role_id = $request->role_id;
                 $user->company_id = $request->company_id;
                 $user->save();
@@ -208,6 +209,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $password = $request->password;
             $user->password = bcrypt($password);
+            $user->image = $request->image;
             $user->role_id = $request->role_id;
             $user->company_id = $request->company_id;
             $user->save();

@@ -25,9 +25,10 @@ class StoreUpdateUserRequest extends FormRequest
     {
         return [
             'first_name' => 'required|alpha_spaces',
-            'last_name' => 'required|/^[\pL\s\-]+$/u',
+            'last_name' => 'required|alpha_spaces',
             'email' => 'required|email',
             'password' => 'required',
+            'image' => 'required|url',
             'role_id' => 'required|integer|exists:roles,id',
             'company_id' => 'required|integer|exists:companies,id',
         ];

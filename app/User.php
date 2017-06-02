@@ -2,11 +2,10 @@
 
 namespace App;
 
-use App\Models\Car;
 use App\Models\Company;
 use App\Models\Role;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -19,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'role_id'
+        'first_name', 'last_name', 'email', 'image', 'role_id'
     ];
 
     /**

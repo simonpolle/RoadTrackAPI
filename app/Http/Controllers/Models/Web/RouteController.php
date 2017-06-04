@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\route\EditDeleteRouteRequest;
 use App\Http\Requests\route\StoreUpdateRouteRequest;
 use App\Models\Car;
+use App\Models\Location;
 use App\Models\Route;
 use Barryvdh\DomPDF\Facade as PDF;
+use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -169,6 +172,45 @@ class RouteController extends Controller
     {
         return view('route.create', [
             'users' => User::where('company_id', Auth::user()->company_id)->get(),
+        ]);
+    }
+
+    /**
+     * Show the details of a resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function details(Request $request)
+    {
+        $route = Route::find($request->id);
+        $locations = Location::where('route_id', $request->id)->get(['latitude', 'longitude']);
+        $firstLocation = $locations->first();
+        $lastLocation = $locations->last();
+        /* @var Collection $locations */
+        $coordinates = $locations->map(function (Location $location)
+        {
+            return $location->latitude . ',' . $location->longitude;
+        });
+        $coordinates = implode('|', $coordinates->toArray());
+
+        $guzzleClient = new \GuzzleHttp\Client();
+        $url = sprintf('https://roads.googleapis.com/v1/snapToRoads?path=%s&interpolate=true&key=%s', $coordinates, env('GOOGLE_API_KEY'));
+        $res = $guzzleClient->requestAsync('GET', $url)->wait();
+        $res = json_decode((string)$res->getBody());
+
+        $coordinates = array_map(function ($point)
+        {
+            return (array)$point->location;
+        }, $res->snappedPoints);
+
+        Mapper::map($firstLocation->latitude, $firstLocation->longitude, ['zoom' => 10]);
+        Mapper::marker($lastLocation->latitude, $lastLocation->latitude);
+        Mapper::polyline($coordinates);
+
+        return view('route.details', [
+            'route' => $route,
+            'locations' => $locations,
         ]);
     }
 

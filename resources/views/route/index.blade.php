@@ -60,6 +60,9 @@
                                                                     class="fa fa-sort-down"></i> </a>
                                                     </th>
                                                     <th>
+                                                        Details
+                                                    </th>
+                                                    <th>
                                                         Edit
                                                     </th>
                                                     <th>
@@ -75,6 +78,17 @@
                                                         <td>{{ number_format($route->distance_travelled, 2) }}km
                                                         </td>
                                                         <td>{{ number_format($route->total_cost, 2) }} €</td>
+                                                        <td>
+                                                            <form role="form" method="GET"
+                                                                  action="{{ route('route.details') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $route->id }}">
+                                                                <button type="submit" class="btn btn-info"><span
+                                                                            class="glyphicon glyphicon-list-alt"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
                                                         <td>
                                                             <form role="form" method="GET"
                                                                   action="{{ route('route.edit') }}">

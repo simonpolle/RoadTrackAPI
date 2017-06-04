@@ -169,8 +169,8 @@ return [
         /*
          * Package Service Providers...
          */
-
-        //
+        'GoogleMaps\ServiceProvider\GoogleMapsServiceProvider',
+        Cornford\Googlmapper\MapperServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -230,6 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
+        'GoogleMaps' => 'GoogleMaps\Facade\GoogleMapsFacade',
+        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
     ],
 
 ];

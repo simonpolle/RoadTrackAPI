@@ -91,6 +91,7 @@ $router->group(['prefix' => 'route', 'namespace' => 'Models\Web', 'middleware' =
     $router->get('pdf', 'RouteController@pdf')->name('route.pdf');
     $router->get('excel', 'RouteController@excel')->name('route.excel');
     $router->get('create', 'RouteController@create')->name('route.create');
+    $router->get('details', 'RouteController@details')->name('route.details');
     $router->post('store', 'RouteController@store')->name('route.store');
     $router->get('edit', 'RouteController@edit')->name('route.edit');
     $router->post('update', 'RouteController@update')->name('route.update');

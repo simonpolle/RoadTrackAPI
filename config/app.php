@@ -171,6 +171,7 @@ return [
          */
         'GoogleMaps\ServiceProvider\GoogleMapsServiceProvider',
         Cornford\Googlmapper\MapperServiceProvider::class,
+        'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
 
         /*
          * Application Service Providers...
@@ -232,6 +233,7 @@ return [
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'GoogleMaps' => 'GoogleMaps\Facade\GoogleMapsFacade',
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
+        'JavaScript' => Cornford\Googlmapper\MapperServiceProvider::class,
     ],
 
 ];

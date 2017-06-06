@@ -79,7 +79,6 @@
                                         <!-- /.row -->
                                     </div>
                                 </div>
-
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Route</h3>
@@ -95,16 +94,43 @@
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body" style="display: block;">
-                                        <div style="height: 500px; width: 100%">{!! Mapper::render () !!}</div>
+                                        <div style="height: 500px; width: 100%" id="map"></div>
                                     </div>
+                                    <script>
+
+                                        // This example creates a 2-pixel-wide red polyline showing the path of William
+                                        // Kingsford Smith's first trans-Pacific flight between Oakland, CA, and
+                                        // Brisbane, Australia.
+
+                                        function initMap() {
+                                            var map = new google.maps.Map(document.getElementById('map'), {
+                                                zoom: 16,
+                                                center: {lat: 50.741429822938, lng: 4.2395804288818},
+                                                mapTypeId: 'terrain'
+                                            });
+
+                                            var flightPlanCoordinates = {!! json_encode($coordinates) !!};
+
+                                            var flightPath = new google.maps.Polyline({
+                                                path: flightPlanCoordinates,
+                                                geodesic: true,
+                                                strokeColor: '#FF0000',
+                                                strokeOpacity: 1.0,
+                                                strokeWeight: 2
+                                            });
+
+                                            flightPath.setMap(map);
+                                        }
+                                    </script>
+                                    <script async defer
+                                            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4D5-FxSBcvFmF4vq0YZ1EbDiT7WCsL7M&callback=initMap">
+                                    </script>
                                     <!-- /.box-body -->
                                     <div class="box-footer text-center" style="display: block;">
                                         <a href="http://localhost:8000/route" class="uppercase">View All Routes</a>
                                     </div>
                                     <!-- /.box-footer -->
                                 </div>
-
-
                             </div>
                         </div>
                         <!-- /.box-body -->

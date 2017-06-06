@@ -12,7 +12,8 @@
         "laravel/passport": "~1.0",
         "experus/exceptions": "^2.1",
         "alexpechkarev/google-maps": "1.0.7",
-        "cornford/googlmapper": "2.*"
+      "cornford/googlmapper": "2.*",
+      "laracasts/utilities": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

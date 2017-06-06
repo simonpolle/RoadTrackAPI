@@ -75,9 +75,9 @@
                                                     <tr>
                                                         <td>{{ $route->user->first_name }} {{ $route->user->last_name }} </td>
                                                         <td>{{ $route->car->licence_plate }}</td>
-                                                        <td>{{ number_format($route->distance_travelled, 2) }}km
+                                                        <td>{{ number_format($route->distance_travelled, 2) }} km
                                                         </td>
-                                                        <td>{{ number_format($route->total_cost, 2) }} €</td>
+                                                        <td>€ {{ number_format($route->total_cost, 2) }}</td>
                                                         <td>
                                                             <form role="form" method="GET"
                                                                   action="{{ route('route.details') }}">

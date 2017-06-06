@@ -9,7 +9,6 @@ use App\Models\Car;
 use App\Models\Location;
 use App\Models\Route;
 use Barryvdh\DomPDF\Facade as PDF;
-use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -184,40 +183,42 @@ class RouteController extends Controller
     public function details(Request $request)
     {
         $route = Route::find($request->id);
-        $locations = Location::where('route_id', $request->id)->get(['latitude', 'longitude']);
+        $locations = Location::where('route_id', $request->id)->get(['lat', 'lng']);
         $firstLocation = $locations->first();
         $lastLocation = $locations->last();
         /* @var Collection $locations */
         $coordinates = $locations->map(function (Location $location)
         {
-            return $location->latitude . ',' . $location->longitude;
+            return $location->lat . ',' . $location->lng;
         });
         $coordinates = implode('|', $coordinates->toArray());
 
         $guzzleClient = new \GuzzleHttp\Client();
         $url = sprintf('https://roads.googleapis.com/v1/snapToRoads?path=%s&interpolate=true&key=%s', $coordinates, env('GOOGLE_API_KEY'));
+
         $res = $guzzleClient->requestAsync('GET', $url)->wait();
         $res = json_decode((string)$res->getBody());
 
         $coordinates = array_map(function ($point)
         {
-            return (array)$point->location;
+            return (object)$point->location;
         }, $res->snappedPoints);
 
-        Mapper::map($firstLocation->latitude, $firstLocation->longitude, ['zoom' => 10]);
-        Mapper::marker($lastLocation->latitude, $lastLocation->latitude);
-        Mapper::polyline($coordinates);
+        $json = json_encode($coordinates);
+        $json = str_replace("latitude", "lat", $json);
+        $json = str_replace("longitude", "lng", $json);
+        $coordinates = json_decode($json);
 
         return view('route.details', [
             'route' => $route,
-            'locations' => $locations,
+            'coordinates' => $coordinates,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRouteRequest|Request $request
+     * @param StoreRouteRequest|StoreUpdateRouteRequest|Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUpdateRouteRequest $request)

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Catchers\AuthenticationCatcher;
 use App\Exceptions\Catchers\Database\NotFoundCatcher;
 use App\Exceptions\Catchers\ValidationCatcher;
 use App\Exceptions\Entities\Cars\CarNotFoundException;
@@ -21,11 +22,13 @@ class Handler extends ExceptionHandler
         ],
         ValidationCatcher::class => [
             ValidationException::class,
+        ],
+        AuthenticationCatcher::class => [
+            AuthenticationCatcher::class,
         ]
     ];
 
     protected $blacklist = [
-        \Illuminate\Auth\AuthenticationException::class,
     ];
 
     /**
@@ -34,7 +37,6 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
         \Illuminate\Auth\Access\AuthorizationException::class,
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,

@@ -21,7 +21,14 @@ class CostTableSeeder extends Seeder
         ]);
 
         DB::table('costs')->insert([
-            'name' => 'Reimbursement employees',
+            'name' => 'Reimbursement cars',
+            'cost' => 0.15,
+            'company_id' => '1',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('costs')->insert([
+            'name' => 'Reimbursement bicycles',
             'cost' => 0.15,
             'company_id' => '1',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

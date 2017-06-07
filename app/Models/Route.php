@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Route extends Model
 {
     protected $fillable = [
-      'user_id', 'car_id', 'distance_travelled', 'total_cost'
+        'user_id', 'car_id', 'distance_travelled', 'total_cost', 'cost_id'
     ];
 
     public function car()
@@ -24,5 +24,10 @@ class Route extends Model
     public function locations()
     {
         return $this->hasMany(Location::class);
+    }
+
+    public function cost()
+    {
+        return $this->belongsTo(Cost::class);
     }
 }

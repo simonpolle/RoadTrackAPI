@@ -204,7 +204,13 @@ class UserController extends Controller
                 $password = $request->password;
                 $user->password = bcrypt($password);
                 $user->image = $request->image;
-                $user->role_id = $request->role_id;
+
+                $role = Role::find($request->role_id);
+                $user->role()->associate($role);
+
+                $company = Company::find(Auth::user()->company_id);
+                $user->company()->associate($company);
+
                 $user->save();
 
                 return redirect()->route('user.index');
@@ -219,8 +225,13 @@ class UserController extends Controller
             $password = $request->password;
             $user->password = bcrypt($password);
             $user->image = $request->image;
-            $user->role_id = $request->role_id;
-            $user->company_id = $request->company_id;
+
+            $role = Role::find($request->role_id);
+            $user->role()->associate($role);
+
+            $company = Company::find($request->company_id);
+            $user->company()->associate($company);
+
             $user->save();
 
             return redirect()->route('user.index');

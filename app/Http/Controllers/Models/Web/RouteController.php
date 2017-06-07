@@ -184,13 +184,12 @@ class RouteController extends Controller
     {
         $route = Route::find($request->id);
         $locations = Location::where('route_id', $request->id)->get(['lat', 'lng']);
-        $firstLocation = $locations->first();
-        $lastLocation = $locations->last();
         /* @var Collection $locations */
         $coordinates = $locations->map(function (Location $location)
         {
             return $location->lat . ',' . $location->lng;
         });
+
         $coordinates = implode('|', $coordinates->toArray());
 
         $guzzleClient = new \GuzzleHttp\Client();
@@ -212,6 +211,7 @@ class RouteController extends Controller
         return view('route.details', [
             'route' => $route,
             'coordinates' => $coordinates,
+            'firstLocation' => $coordinates[0],
         ]);
     }
 

@@ -5,12 +5,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Users
-                <small>Edit user</small>
+                Companies
+                <small>Edit company</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Users</a></li>
+                <li><a href="#">Companies</a></li>
                 <li class="active">Edit</li>
             </ol>
         </section>
@@ -22,76 +22,75 @@
                     <!-- general form elements -->
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Edit user</h3>
+                            <h3 class="box-title">Edit company</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{ URL::route('user.update') }}">
+                        <form role="form" method="POST" action="{{ URL::route('company.update') }}">
                             {{ csrf_field() }}
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="InputDistance">First name</label>
-                                    <input type="text" class="form-control"
-                                           id="first_name"
-                                           name="first_name" value="{{ $user->first_name }}"
-                                           placeholder="first name"
+                                    <label for="InputName">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           value="{{ $company->name }}"
+                                           placeholder="name"
                                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
                                            autocomplete="off">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="InputDistance">Last name</label>
-                                    <input type="text" class="form-control"
-                                           id="last_name"
-                                           name="last_name" value="{{ $user->last_name }}"
-                                           placeholder="last name"
+                                    <label for="InputStreet">Street</label>
+                                    <input type="text" class="form-control" id="street" name="street"
+                                           value="{{ $company->street }}"
+                                           placeholder="street"
                                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
                                            autocomplete="off">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="InputDistance">Email</label>
-                                    <input type="email" class="form-control"
-                                           id="email"
-                                           name="email" value="{{ $user->email }}"
-                                           placeholder="email"
+                                    <label for="InputStreetNumber">Street number</label>
+                                    <input type="text" class="form-control" id="street_number" name="street_number"
+                                           value="{{ $company->street_number }}"
+                                           placeholder="street_number"
                                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
                                            autocomplete="off">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="InputDistance">Password</label>
-                                    <input type="password" class="form-control" data-toggle="password" disabled
-                                           id="password"
-                                           name="password" value="this is secure -> data is not exposed"
-                                           placeholder="password"
+                                    <label for="InputPostalCode">Postal code</label>
+                                    <input type="text" class="form-control" id="postal_code" name="postal_code"
+                                           value="{{ $company->postal_code }}"
+                                           placeholder="postal_code"
                                            style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
                                            autocomplete="off">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="InputDistance">Profile picture</label>
-                                    <input type="text" class="form-control"
-                                           id="image"
-                                           name="image" value="{{ $user->image }}"
-                                           placeholder="last image"
-                                           style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
-                                           autocomplete="off">
-                                </div>
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <select class="form-control" name="role_id">
-                                        @foreach($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    <label>Country</label>
+                                    <select class="form-control" name="country">
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->name }}">{{ $country->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                @if(Auth::user()->role_id == 3)
-                                    <div class="form-group">
-                                        <label>Company</label>
-                                        <select class="form-control" name="company_id">
-                                            @foreach($companies as $company)
-                                                <option value="{{ $company->id }}">{{ $company->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
+
+                                <div class="form-group">
+                                    <label for="InputVatNumber">VAT number</label>
+                                    <input type="text" class="form-control" id="vat_number" name="vat_number"
+                                           value="{{ $company->vat_number }}"
+                                           placeholder="vat number"
+                                           style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
+                                           autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>User (Admin)</label>
+                                    <select class="form-control" name="user_id">
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 @if (count($errors) > 0)
                                     <div class="alert alert-danger">
                                         <ul>
@@ -102,9 +101,8 @@
                                     </div>
                                 @endif
                             </div>
-                            <input type="hidden" name="id" value="{{ $user->id }}">
+                            <input type="hidden" name="id" value="{{ $company->id }}">
                             <!-- /.box-body -->
-
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>

@@ -60,6 +60,12 @@
                                                     <th>
                                                         Company
                                                     </th>
+                                                    <th>
+                                                        Edit
+                                                    </th>
+                                                    <th>
+                                                        Delete
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -79,6 +85,26 @@
                                                         @else
                                                             <td>None</td>
                                                         @endif
+                                                        <td>
+                                                            <form role="form" method="GET"
+                                                                  action="{{ URL::route('user.edit') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id" value="{{ $user->id }}">
+                                                                <button type="submit" class="btn btn-warning"><span
+                                                                            class="glyphicon glyphicon-edit"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" method="POST"
+                                                                  action="{{ URL::route('user.destroy') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id" value="{{ $user->id }}">
+                                                                <button type="submit" class="btn btn-danger"><span
+                                                                            class="glyphicon glyphicon-remove"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -89,6 +115,8 @@
                                                     <th rowspan="1" colspan="1">Email</th>
                                                     <th rowspan="1" colspan="1">Role</th>
                                                     <th rowspan="1" colspan="1">Company</th>
+                                                    <th rowspan="1" colspan="1">Edit</th>
+                                                    <th rowspan="1" colspan="1">Delete</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

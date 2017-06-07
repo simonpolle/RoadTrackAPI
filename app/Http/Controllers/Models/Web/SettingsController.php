@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Models\Web;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\EditDeleteUserRequest;
+use App\Http\Requests\EditDeleteUserRequest;
 use App\Http\Requests\User\StoreUpdateUserRequest;
 use App\Models\Company;
 use App\Models\Role;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-class UserController extends Controller
+class SettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,20 +25,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id == 2)
-        {
-            $company = Company::where('id', Auth::user()->company_id)->first();
-            $users = User::where('company_id', $company->id)->paginate(10);
-            return view('user.index', [
-                'users' => $users
-            ]);
-        }
-        else if (Auth::user()->role_id == 3)
-        {
-            return view('user.index', [
-                'users' => User::paginate(10)
-            ]);
-        }
+        return view('user.index', [
+            'users' => $users
+        ]);
     }
 
     public function indexNameAscending()
@@ -163,20 +152,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->role_id == 2)
-        {
-            return view('user.create', [
-                'roles' => Role::where('name', '<>', 'admin')->get(),
-                'companies' => Company::where('id', Auth::user()->company_id)->get()
-            ]);
-        }
-        else if (Auth::user()->role_id == 3)
-        {
-            return view('user.create', [
-                'roles' => Role::all(),
-                'companies' => Company::all()
-            ]);
-        }
+        return view('user.create', [
+            'roles' => Role::where('name', '<>', 'admin')->get(),
+            'companies' => Company::where('id', Auth::user()->company_id)->get()
+        ]);
     }
 
     /**
@@ -205,6 +184,7 @@ class UserController extends Controller
                 $user->password = bcrypt($password);
                 $user->image = $request->image;
                 $user->role_id = $request->role_id;
+                $user->company_id = $request->company_id;
                 $user->save();
 
                 return redirect()->route('user.index');
@@ -241,37 +221,12 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Request $request
-     * @return View
-     * @internal param int $id
+     * @param  int $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        if (Auth::user()->role_id == 2)
-        {
-            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
-
-            if (!in_array($request->id, $users->toArray()))
-            {
-                return redirect()->route('forbidden');
-            }
-            else
-            {
-                return view('user.edit', [
-                    'user' => User::find($request->id),
-                    'roles' => Role::where('name', '<>', 'admin')->get(),
-                    'companies' => Company::where('id', Auth::user()->company_id)->get()
-                ]);
-            }
-        }
-        else if (Auth::user()->role_id == 3)
-        {
-            return view('user.edit', [
-                'user' => User::find($request->id),
-                'roles' => Role::all(),
-                'companies' => Company::all(),
-            ]);
-        }
+        //
     }
 
     /**
@@ -283,81 +238,18 @@ class UserController extends Controller
      */
     public function update(StoreUpdateUserRequest $request)
     {
-        if (Auth::user()->role_id == 2)
-        {
-            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
-
-            if (!in_array($request->id, $users->toArray()))
-            {
-                return redirect()->route('forbidden');
-            }
-            else
-            {
-                $user = User::find($request->id);
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->email = $request->email;
-                $user->image = $request->image;
-
-                $role = Role::find($request->role_id);
-                $user->role()->associate($role);
-
-                $user->save();
-
-                return redirect()->route('user.index');
-            }
-        }
-        else if (Auth::user()->role_id == 3)
-        {
-            $user = User::find($request->id);
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
-            $user->email = $request->email;
-            $user->image = $request->image;
-
-            $role = Role::find($request->role_id);
-            $user->role()->associate($role);
-
-            $company = Company::find($request->company_id);
-            $user->company()->associate($company);
-
-            $user->save();
-
-            return redirect()->route('user.index');
-        }
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Http\Controllers\Models\Web\EditDeleteUserRequest|EditDeleteUserRequest $request
+     * @param EditDeleteUserRequest $request
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
     public function destroy(EditDeleteUserRequest $request)
     {
-        if (Auth::user()->role_id == 2)
-        {
-            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
-
-            if (!in_array($request->id, $users->toArray()))
-            {
-                return redirect()->route('forbidden');
-            }
-            else
-            {
-                $user = User::where('id', $request->id);
-                $user->delete();
-
-                return redirect()->route('user.index');
-            }
-        }
-        else if (Auth::user()->role_id == 3)
-        {
-            $user = User::where('id', $request->id);
-            $user->delete();
-
-            return redirect()->route('user.index');
-        }
+        //
     }
 }

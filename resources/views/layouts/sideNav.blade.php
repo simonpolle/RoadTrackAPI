@@ -66,6 +66,21 @@
                 </ul>
             </li>
 
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Costs</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active"><a href="{{ route('cost.index') }}"><i class="fa fa-table"></i> All costs</a>
+                    </li>
+                    <li class="active"><a href="{{ route('cost.create') }}"><i class="fa fa-edit"></i> Create cost</a>
+                    </li>
+                </ul>
+            </li>
+
             @if(Auth::user()->role_id == 3)
                 <li class="treeview">
                     <a href="#">

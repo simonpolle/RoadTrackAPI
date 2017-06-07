@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Company;
+use App\Models\Cost;
 use App\Models\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'image', 'role_id'
+        'first_name', 'last_name', 'email', 'image', 'role_id', 'cost_id'
     ];
 
     /**
@@ -39,5 +40,10 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function cost()
+    {
+        return $this->belongsTo(Cost::class);
     }
 }

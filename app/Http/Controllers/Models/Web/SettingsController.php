@@ -25,9 +25,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('user.index', [
-            'users' => $users
-        ]);
+        return view('settings.index');
     }
 
     public function indexNameAscending()

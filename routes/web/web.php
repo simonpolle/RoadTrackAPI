@@ -99,6 +99,23 @@ $router->group(['prefix' => 'route', 'namespace' => 'Models\Web', 'middleware' =
 });
 
 /*
+ * Cost routes
+ */
+$router->group(['prefix' => 'cost', 'namespace' => 'Models\Web', 'middleware' => ['company']], function () use ($router)
+{
+    $router->get('/', 'CostController@index')->name('cost.index');
+    $router->get('/name/asc', 'CostController@indexNameAscending')->name('cost.indexNameAscending');
+    $router->get('/name/desc', 'CostController@indexNameDescending')->name('cost.indexNameDescending');
+    $router->get('pdf', 'CostController@pdf')->name('cost.pdf');
+    $router->get('excel', 'CostController@excel')->name('cost.excel');
+    $router->get('create', 'CostController@create')->name('cost.create');
+    $router->post('store', 'CostController@store')->name('cost.store');
+    $router->get('edit', 'CostController@edit')->name('cost.edit');
+    $router->post('update', 'CostController@update')->name('cost.update');
+    $router->post('destroy', 'CostController@destroy')->name('cost.destroy');
+});
+
+/*
  * User routes
  */
 $router->group(['prefix' => 'user', 'namespace' => 'Models\Web', 'middleware' => ['company']], function () use ($router) {

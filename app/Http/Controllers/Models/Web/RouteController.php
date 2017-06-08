@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\route\EditDeleteRouteRequest;
 use App\Http\Requests\route\StoreUpdateRouteRequest;
 use App\Models\Car;
+use App\Models\Cost;
 use App\Models\Location;
 use App\Models\Route;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -169,9 +170,20 @@ class RouteController extends Controller
      */
     public function create()
     {
-        return view('route.create', [
-            'users' => User::where('company_id', Auth::user()->company_id)->get(),
-        ]);
+        if (Auth::user()->role_id == 2)
+        {
+            return view('route.create', [
+                'users' => User::where('company_id', Auth::user()->company_id)->get(),
+                'costs' => Cost::where('company_id', Auth::user()->company_id)->get(),
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.create', [
+                'users' => User::where('company_id', Auth::user()->company_id)->get(),
+                'costs' => Cost::all(),
+            ]);
+        }
     }
 
     /**
@@ -279,21 +291,19 @@ class RouteController extends Controller
     {
         if (Auth::user()->role_id == 2)
         {
-            $users = User::where('company_id', Auth::user()->company_id)->get();
-            $route = Route::find($request->id);
-
             return view('route.edit', [
-                'users' => $users,
-                'route' => $route,
+                'users' => User::where('company_id', Auth::user()->company_id)->get(),
+                'route' => Route::find($request->id),
+                'costs' => Cost::where('company_id', Auth::user()->company_id)->get(),
             ]);
         }
         else if (Auth::user()->role_id == 3)
         {
-            $cars = Car::all();
             return view('route.edit', [
-                'cars' => $cars,
+                'cars' => Car::all(),
                 'route' => Route::find($request->id),
                 'users' => DB::table('users')->where('role_id', 1)->get(),
+                'costs' => Cost::all(),
             ]);
         }
     }

@@ -28,7 +28,7 @@ class StoreUpdateCompanyRequest extends FormRequest
             'street' => 'required',
             'street_number' => 'required|numeric',
             'postal_code' => 'required|digits:4',
-            'country' => 'required',
+            'country_id' => 'required|integer|exists:countries,id',
             'vat_number' => 'required',
             'user_id' => 'required|integer|exists:users,id',
         ];

@@ -132,11 +132,16 @@ class CompanyController extends Controller
         $company->street = $request->street;
         $company->street_number = $request->street_number;
         $company->postal_code = $request->postal_code;
-        $company->country = $request->country;
+
+        $country = Country::find($request->country_id);
+        $company->country()->associate($country);
+
         $company->vat_number = $request->vat_number;
-        $company->user_id = $request->user_id;
+
+        $user = User::find($request->user_id);
+        $company->user()->associate($user);
+
         $company->save();
-        $company->user()->save(\App\User::find($request->user_id));
 
         return redirect()->route('company.index');
     }
@@ -183,9 +188,14 @@ class CompanyController extends Controller
         $company->street = $request->street;
         $company->street_number = $request->street_number;
         $company->postal_code = $request->postal_code;
-        $company->country = $request->country;
+
+        $country = Country::find($request->country_id);
+        $company->country()->associate($country);
+
         $company->vat_number = $request->vat_number;
-        $company->user_id = $request->user_id;
+        $user = User::find($request->user_id);
+        $company->user()->associate($user);
+
         $company->save();
 
         return redirect()->route('company.index');

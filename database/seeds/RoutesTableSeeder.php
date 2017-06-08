@@ -20,6 +20,7 @@ class RoutesTableSeeder extends Seeder
                 'car_id' => '1',
                 'distance_travelled' => $i + 10 * 1.25,
                 'total_cost' => $i + 10 * 1.25 * 0.75,
+                'cost_id' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
 
@@ -28,6 +29,7 @@ class RoutesTableSeeder extends Seeder
                 'car_id' => '1',
                 'distance_travelled' => $i + 10 * 1.25,
                 'total_cost' => $i + 10 * 1.25 * 0.75,
+                'cost_id' => 2,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         }

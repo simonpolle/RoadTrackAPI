@@ -63,9 +63,14 @@
 
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select class="form-control selectpicker" data-live-search="true" name="country">
+                                    <select class="form-control selectpicker" data-live-search="true" name="country_id">
                                         @foreach($countries as $country)
-                                            <option value="{{ $country->name }}">{{ $country->name }}</option>
+                                            @if($country->name == $company->country->name)
+                                                <option selected
+                                                        value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @else
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -80,9 +85,14 @@
 
                                 <div class="form-group">
                                     <label>User (Admin)</label>
-                                    <select class="form-control" name="user_id" >
+                                    <select class="form-control selectpicker" data-live-search="true" name="user_id">
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @if($user->id == $company->user->id)
+                                                <option selected
+                                                        value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

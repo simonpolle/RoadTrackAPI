@@ -65,7 +65,7 @@
                                                 <tr>
                                                     <td>{{ $company->user->first_name }} {{ $company->user->last_name }}</td>
                                                     <td>{{ $company->name }}</td>
-                                                    <td>{{ $company->street }} {{ $company->number }} {{ $company->postal_code }} {{ $company->country }}</td>
+                                                    <td>{{ $company->street }} {{ $company->number }} {{ $company->postal_code }} {{ $company->country->name }}</td>
                                                     <td>{{ $company->vat_number }}</td>
                                                     <td>
                                                         <form role="form" method="GET"

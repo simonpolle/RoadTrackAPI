@@ -31,9 +31,14 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label>User</label>
-                                    <select class="form-control" name="user_id">
+                                    <select class="form-control selectpicker" data-live-search="true" name="user_id">
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @if($user->id == $route->user->id)
+                                                <option selected
+                                                        value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -58,6 +63,18 @@
                                            autocomplete="off"
                                            pattern="[0-9]+([\.,][0-9]+)?"
                                            step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cost</label>
+                                    <select class="form-control selectpicker" data-live-search="true" name="cost_id">
+                                        @foreach($costs as $cost)
+                                            @if($cost->id == $route->cost->id)
+                                                <option selected value="{{ $cost->id }}">{{ $cost->name }}</option>
+                                            @else
+                                                <option value="{{ $cost->id }}">{{ $cost->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                                 @if (count($errors) > 0)
                                     <div class="alert alert-danger">

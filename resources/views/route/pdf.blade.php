@@ -1,18 +1,11 @@
 <table>
     <thead>
         <tr>
-            <th>
-                User
-            </th>
-            <th>
-                Licence plate
-            </th>
-            <th>
-                Distance travelled
-            </th>
-            <th>
-                Total cost
-            </th>
+            <th>User</th>
+            <th>Licence plate</th>
+            <th>Distance travelled</th>
+            <th>Total cost</th>
+            <th>Cost</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +16,7 @@
                 <td>{{ $route->car->licence_plate }}</td>
                 <td>{{ $route->distance_travelled }}</td>
                 <td>{{ $route->total_cost }}</td>
+                <td>{{ $route->cost->name }}</td>
             </tr>
         @endforeach
     </tbody>
@@ -32,6 +26,7 @@
             <th>Licence plate</th>
             <th>Distance travelled</th>
             <th>Total cost</th>
+            <th>Cost</th>
         </tr>
     </tfoot>
 </table>

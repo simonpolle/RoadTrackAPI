@@ -56,7 +56,12 @@
                                         <select class="form-control selectpicker" data-live-search="true"
                                                 name="company_id">
                                             @foreach($companies as $company)
-                                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                                @if($company->id == $cost->company->id)
+                                                    <option selected
+                                                            value="{{ $company->id }}">{{ $company->name }}</option>
+                                                @else
+                                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     @else

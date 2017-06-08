@@ -33,7 +33,7 @@
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
                                     <div class="widget-user-header bg-aqua-active">
                                         <h3 class="widget-user-username">{{ ucfirst($route->user->first_name) }} {{ ucfirst($route->user->last_name) }}</h3>
-                                        <h5 class="widget-user-desc">{{ ucfirst($route->user->role->name) }}</h5>
+                                        <h5 class="widget-user-desc">{{ ucfirst($route->cost->name) }}</h5>
                                     </div>
                                     <div class="widget-user-image">
                                         <img class="img-circle" src="{{ $route->user->image }}" alt="User Avatar">

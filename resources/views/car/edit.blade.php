@@ -40,7 +40,12 @@
                                     <label>User</label>
                                     <select class="form-control selectpicker" data-live-search="true" name="user_id">
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @if($user->id == $car->user->id)
+                                                <option selected
+                                                        value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

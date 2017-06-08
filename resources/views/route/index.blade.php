@@ -38,12 +38,8 @@
                                                role="grid" aria-describedby="example2_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th>
-                                                        User
-                                                    </th>
-                                                    <th>
-                                                        Licence plate
-                                                    </th>
+                                                    <th>User</th>
+                                                    <th>Licence plate</th>
                                                     <th>
                                                         Distance travelled <a
                                                                 href="{{ route('route.indexDistanceAscending') }}"
@@ -59,15 +55,10 @@
                                                         <a href="{{ route('route.indexCostDescending') }}"><i
                                                                     class="fa fa-sort-down"></i> </a>
                                                     </th>
-                                                    <th>
-                                                        Details
-                                                    </th>
-                                                    <th>
-                                                        Edit
-                                                    </th>
-                                                    <th>
-                                                        Delete
-                                                    </th>
+                                                    <th>Cost</th>
+                                                    <th>Details</th>
+                                                    <th>Edit</th>
+                                                    <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -78,6 +69,7 @@
                                                         <td>{{ number_format($route->distance_travelled, 2) }} km
                                                         </td>
                                                         <td>€ {{ number_format($route->total_cost, 2) }}</td>
+                                                        <td> {{ $route->cost->name }}</td>
                                                         <td>
                                                             <form role="form" method="GET"
                                                                   action="{{ route('route.details') }}">
@@ -120,6 +112,7 @@
                                                     <th rowspan="1" colspan="1">Licence plate</th>
                                                     <th rowspan="1" colspan="1">Distance travelled</th>
                                                     <th rowspan="1" colspan="1">Total cost</th>
+                                                    <th rowspan="1" colspan="1">Cost</th>
                                                     <th rowspan="1" colspan="1">Edit</th>
                                                     <th rowspan="1" colspan="1">Delete</th>
                                                 </tr>

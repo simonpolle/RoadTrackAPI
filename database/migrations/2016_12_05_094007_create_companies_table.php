@@ -19,7 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('street');
             $table->string('street_number');
             $table->integer('postal_code');
-            $table->string('country');
+            $table->string('country_id')->references('id')->on('companies');
             $table->string('vat_number');
             $table->string('user_id')->references('id')->on('users');
             $table->timestamps();

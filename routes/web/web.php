@@ -131,6 +131,7 @@ $router->group(['prefix' => 'user', 'namespace' => 'Models\Web', 'middleware' =>
     $router->get('pdf', 'UserController@pdf')->name('user.pdf');
     $router->get('excel', 'UserController@excel')->name('user.excel');
     $router->get('create', 'UserController@create')->name('user.create');
+    $router->get('details', 'UserController@details')->name('user.details');
     $router->post('store', 'UserController@store')->name('user.store');
     $router->get('edit', 'UserController@edit')->name('user.edit');
     $router->post('update', 'UserController@update')->name('user.update');

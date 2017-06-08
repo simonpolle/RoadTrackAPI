@@ -8,8 +8,10 @@ use App\Http\Requests\User\EditDeleteUserRequest;
 use App\Http\Requests\User\StoreUpdateUserRequest;
 use App\Models\Company;
 use App\Models\Role;
+use App\Models\Route;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -194,6 +196,20 @@ class UserController extends Controller
                 'companies' => Company::all()
             ]);
         }
+    }
+
+    public function details(EditDeleteUserRequest $request)
+    {
+        $user = User::find($request->id);
+        $routes = Route::where('user_id', $user->id)->whereMonth('created_at', '=', Carbon::now()->month)->get();
+        $total_costs = $routes->sum('total_cost');
+
+        return view('user.details', [
+            'user' => $user,
+            'routes' => $routes,
+            'total_costs' => $total_costs,
+            'cost_type' => $routes->first()->cost->name,
+        ]);
     }
 
     /**

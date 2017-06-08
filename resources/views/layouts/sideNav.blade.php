@@ -34,6 +34,8 @@
                     </li>
                     <li class="active"><a href="{{ route('user.create') }}"><i class="fa fa-edit"></i> Create user</a>
                     </li>
+                    <li class="active"><a href="{{ route('user.search') }}"><i class="fa fa-search"></i> Search
+                            users</a></li>
                 </ul>
             </li>
 
@@ -47,6 +49,8 @@
                 <ul class="treeview-menu">
                     <li class="active"><a href="{{ route('car.index') }}"><i class="fa fa-table"></i> All cars</a></li>
                     <li class="active"><a href="{{ route('car.create') }}"><i class="fa fa-edit"></i> Create car</a>
+                    </li>
+                    <li class="active"><a href="{{ route('car.search') }}"><i class="fa fa-search"></i> Search car</a>
                     </li>
                 </ul>
             </li>
@@ -63,6 +67,8 @@
                     </li>
                     <li class="active"><a href="{{ route('route.create') }}"><i class="fa fa-edit"></i> Create route</a>
                     </li>
+                    <li class="active"><a href="{{ route('route.search') }}"><i class="fa fa-search"></i> Search routes</a>
+                    </li>
                 </ul>
             </li>
 
@@ -78,6 +84,8 @@
                     </li>
                     <li class="active"><a href="{{ route('cost.create') }}"><i class="fa fa-edit"></i> Create cost</a>
                     </li>
+                    <li class="active"><a href="{{ route('cost.search') }}"><i class="fa fa-search"></i> Search
+                            costs</a></li>
                 </ul>
             </li>
 
@@ -91,11 +99,11 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="active"><a href="{{ route('company.index') }}"><i class="fa fa-table"></i> All
-                                companies</a>
-                        </li>
+                                companies</a></li>
                         <li class="active"><a href="{{ route('company.create') }}"><i class="fa fa-edit"></i> Create
-                                company</a>
-                        </li>
+                                company</a></li>
+                        <li class="active"><a href="{{ route('company.search') }}"><i class="fa fa-search"></i> Search
+                                companies</a></li>
                     </ul>
                 </li>
             @endif
@@ -113,6 +121,8 @@
                         </li>
                         <li class="active"><a href="{{ route('role.create') }}"><i class="fa fa-edit"></i> Create
                                 role</a></li>
+                        <li class="active"><a href="{{ route('role.search') }}"><i class="fa fa-search"></i> Search
+                                roles</a></li>
                     </ul>
                 </li>
             @endif

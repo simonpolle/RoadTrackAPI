@@ -26,6 +26,13 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function search()
+    {
+        return view('company.search', [
+            'companies' => Company::all()
+        ]);
+    }
+
     /**
      * Sorts the resource ascending by name
      *

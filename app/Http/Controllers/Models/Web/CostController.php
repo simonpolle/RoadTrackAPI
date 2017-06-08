@@ -41,6 +41,25 @@ class CostController extends Controller
         }
     }
 
+    public function search()
+    {
+        if (Auth::user()->role_id == 2)
+        {
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            $costs = Cost::where('company_id', $company->id)->get();
+
+            return view('cost.search', [
+                'costs' => $costs
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('cost.search', [
+                'costs' => Cost::all()
+            ]);
+        }
+    }
+
     public function indexNameAscending()
     {
         if (Auth::user()->role_id == 2)

@@ -43,6 +43,25 @@ class RouteController extends Controller
         }
     }
 
+    public function search()
+    {
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $routes = Route::whereIn('user_id', $users)->get();
+
+            return view('route.search', [
+                'routes' => $routes
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('route.search', [
+                'routes' => Route::get()
+            ]);
+        }
+    }
+
     public function indexDistanceAscending()
     {
         if (Auth::user()->role_id == 2)

@@ -22,6 +22,11 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">All Roles</h3>
+                            <div class="pull-right">
+                                <form role="form" method="GET" action="{{ URL::route('role.search') }}">
+                                    <button type="submit" class="btn btn-block btn-default btn-flat">Search</button>
+                                </form>
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

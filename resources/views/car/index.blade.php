@@ -24,6 +24,11 @@
                             <h3 class="box-title">All Cars</h3>
                             <h7><a href="{{ route('car.pdf',['download'=>'pdf']) }}">Download PDF</a></h7>
                             <h7><a href="{{ route('car.excel') }}">Download Excel</a></h7>
+                            <div class="pull-right">
+                                <form role="form" method="GET" action="{{ URL::route('car.search') }}">
+                                    <button type="submit" class="btn btn-block btn-default btn-flat">Search</button>
+                                </form>
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">

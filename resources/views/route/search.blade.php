@@ -5,13 +5,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Users
-                <small>All users</small>
+                Routes
+                <small>Search Routes</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Tables</a></li>
-                <li class="active">Users</li>
+                <li class="active">Routes</li>
             </ol>
         </section>
 
@@ -21,13 +21,10 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">All users</h3>
-                            <h7><a href="{{ route('user.pdf',['download'=>'pdf']) }}">Download PDF</a></h7>
-                            <h7><a href="{{ route('user.excel') }}">Download Excel</a></h7>
-                            <div class="pull-right">
-                                <form role="form" method="GET" action="{{ URL::route('user.search') }}">
-                                    <button type="submit" class="btn btn-block btn-default btn-flat">Search</button>
-                                </form>
+                            <h3 class="box-title">Search Routes</h3>
+                            <div class="input-group" style="margin-top: 0.5%">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input type="text" class="search form-control" placeholder="What you looking for?">
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -39,54 +36,59 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="example2" class="table table-bordered table-hover dataTable"
+                                        <table id="example2" class="table table-bordered table-hover dataTable results"
                                                role="grid" aria-describedby="example2_info">
                                             <thead>
                                                 <tr role="row">
+                                                    <th>User</th>
+                                                    <th>Licence plate</th>
                                                     <th>
-                                                        User <a href="{{ route('user.indexNameAscending') }}"
+                                                        Distance travelled <a
+                                                                href="{{ route('route.indexDistanceAscending') }}"
                                                                 style="margin-left:1%;margin-right:1% "><i
                                                                     class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('user.indexNameDescending') }}"><i
-                                                                    class="fa fa-sort-alpha-desc"></i> </a>
+                                                        <a href="{{ route('route.indexDistanceDescending') }}"><i
+                                                                    class="fa fa-sort-down"></i> </a>
                                                     </th>
                                                     <th>
-                                                    </th>
-                                                    <th>
-                                                        Email <a href="{{ route('user.indexEmailAscending') }}"
-                                                                 style="margin-left:1%;margin-right:1% "><i
+                                                        Total cost <a href="{{ route('route.indexCostAscending') }}"
+                                                                      style="margin-left:1%;margin-right:1% "><i
                                                                     class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('user.indexEmailDescending') }}"><i
-                                                                    class="fa fa-sort-alpha-desc"></i> </a>
+                                                        <a href="{{ route('route.indexCostDescending') }}"><i
+                                                                    class="fa fa-sort-down"></i> </a>
                                                     </th>
-                                                    <th>Role</th>
-                                                    <th>Company</th>
+                                                    <th>Cost</th>
+                                                    <th>Details</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($users as $user)
+                                                @foreach($routes as $route)
                                                     <tr>
-                                                        <td>
-                                                            {{ $user->first_name }} {{ $user->last_name }}
+                                                        <td>{{ $route->user->first_name }} {{ $route->user->last_name }} </td>
+                                                        <td>{{ $route->car->licence_plate }}</td>
+                                                        <td>{{ number_format($route->distance_travelled, 2) }} km
                                                         </td>
-                                                        <td>
-                                                            <img src="{{$user->image }}"
-                                                                 alt="User Image" width="50" height="50">
-                                                        </td>
-                                                        <td>{{ $user->email }}</td>
-                                                        <td>{{ $user->role->name }}</td>
-                                                        @if($user->company != null)
-                                                            <td>{{ $user->company->name }}</td>
-                                                        @else
-                                                            <td>None</td>
-                                                        @endif
+                                                        <td>€ {{ number_format($route->total_cost, 2) }}</td>
+                                                        <td> {{ $route->cost->name }}</td>
                                                         <td>
                                                             <form role="form" method="GET"
-                                                                  action="{{ URL::route('user.edit') }}">
+                                                                  action="{{ route('route.details') }}">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" name="id" value="{{ $user->id }}">
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $route->id }}">
+                                                                <button type="submit" class="btn btn-info"><span
+                                                                            class="glyphicon glyphicon-list-alt"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form role="form" method="GET"
+                                                                  action="{{ route('route.edit') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $route->id }}">
                                                                 <button type="submit" class="btn btn-warning"><span
                                                                             class="glyphicon glyphicon-edit"></span>
                                                                 </button>
@@ -94,9 +96,10 @@
                                                         </td>
                                                         <td>
                                                             <form role="form" method="POST"
-                                                                  action="{{ URL::route('user.destroy') }}">
+                                                                  action="{{ URL::route('route.destroy') }}">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" name="id" value="{{ $user->id }}">
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $route->id }}">
                                                                 <button type="submit" class="btn btn-danger"><span
                                                                             class="glyphicon glyphicon-remove"></span>
                                                                 </button>
@@ -108,10 +111,10 @@
                                             <tfoot>
                                                 <tr>
                                                     <th rowspan="1" colspan="1">User</th>
-                                                    <th rowspan="1" colspan="1"></th>
-                                                    <th rowspan="1" colspan="1">Email</th>
-                                                    <th rowspan="1" colspan="1">Role</th>
-                                                    <th rowspan="1" colspan="1">Company</th>
+                                                    <th rowspan="1" colspan="1">Licence plate</th>
+                                                    <th rowspan="1" colspan="1">Distance travelled</th>
+                                                    <th rowspan="1" colspan="1">Total cost</th>
+                                                    <th rowspan="1" colspan="1">Cost</th>
                                                     <th rowspan="1" colspan="1">Edit</th>
                                                     <th rowspan="1" colspan="1">Delete</th>
                                                 </tr>
@@ -121,13 +124,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <div class="dataTables_info" id="example2_info" role="status"
-                                             aria-live="polite">Showing 1 to 10 of {{ $users->count() }} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                            <?php echo $users->render(); ?>
+                                        <div class="dataTables_info" id="example2_info" role="status">
                                         </div>
                                     </div>
                                 </div>

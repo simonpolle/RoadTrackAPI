@@ -6,7 +6,7 @@
         <section class="content-header">
             <h1>
                 Users
-                <small>All users</small>
+                <small>Search users</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -21,13 +21,10 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">All users</h3>
-                            <h7><a href="{{ route('user.pdf',['download'=>'pdf']) }}">Download PDF</a></h7>
-                            <h7><a href="{{ route('user.excel') }}">Download Excel</a></h7>
-                            <div class="pull-right">
-                                <form role="form" method="GET" action="{{ URL::route('user.search') }}">
-                                    <button type="submit" class="btn btn-block btn-default btn-flat">Search</button>
-                                </form>
+                            <h3 class="box-title">Search users</h3>
+                            <div class="input-group" style="margin-top: 0.5%">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input type="text" class="search form-control" placeholder="What you looking for?">
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -39,26 +36,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="example2" class="table table-bordered table-hover dataTable"
+                                        <table id="example2" class="table table-bordered table-hover dataTable results"
                                                role="grid" aria-describedby="example2_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th>
-                                                        User <a href="{{ route('user.indexNameAscending') }}"
-                                                                style="margin-left:1%;margin-right:1% "><i
-                                                                    class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('user.indexNameDescending') }}"><i
-                                                                    class="fa fa-sort-alpha-desc"></i> </a>
-                                                    </th>
-                                                    <th>
-                                                    </th>
-                                                    <th>
-                                                        Email <a href="{{ route('user.indexEmailAscending') }}"
-                                                                 style="margin-left:1%;margin-right:1% "><i
-                                                                    class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('user.indexEmailDescending') }}"><i
-                                                                    class="fa fa-sort-alpha-desc"></i> </a>
-                                                    </th>
+                                                    <th>User</th>
+                                                    <th>Picture</th>
+                                                    <th>Email</th>
                                                     <th>Role</th>
                                                     <th>Company</th>
                                                     <th>Edit</th>
@@ -121,13 +105,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <div class="dataTables_info" id="example2_info" role="status"
-                                             aria-live="polite">Showing 1 to 10 of {{ $users->count() }} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                            <?php echo $users->render(); ?>
+                                        <div class="dataTables_info" id="example2_info" role="status">
                                         </div>
                                     </div>
                                 </div>

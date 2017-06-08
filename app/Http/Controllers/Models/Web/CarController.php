@@ -38,6 +38,24 @@ class CarController extends Controller
         }
     }
 
+    public function search()
+    {
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->pluck('id');
+            $cars = Car::whereIn('user_id', $users)->get();
+            return view('car.search', [
+                'cars' => $cars
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('car.search', [
+                'cars' => Car::all()
+            ]);
+        }
+    }
+
     public function indexLicenceAscending()
     {
         if (Auth::user()->role_id == 2)

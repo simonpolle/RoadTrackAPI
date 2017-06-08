@@ -41,6 +41,23 @@ class UserController extends Controller
         }
     }
 
+    public function search()
+    {
+        if (Auth::user()->role_id == 2)
+        {
+            $users = User::where('company_id', Auth::user()->company_id)->get(10);
+            return view('user.search', [
+                'users' => $users,
+            ]);
+        }
+        else if (Auth::user()->role_id == 3)
+        {
+            return view('user.search', [
+                'users' => User::all(),
+            ]);
+        }
+    }
+
     public function indexNameAscending()
     {
         if (Auth::user()->role_id == 2)

@@ -5,13 +5,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Costs
-                <small>All costs</small>
+                Roles
+                <small>Search Roles</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Tables</a></li>
-                <li class="active">Costs</li>
+                <li class="active">Roles</li>
             </ol>
         </section>
 
@@ -21,13 +21,10 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">All costs</h3>
-                            <h7><a href="{{ route('cost.pdf',['download'=>'pdf']) }}">Download PDF</a></h7>
-                            <h7><a href="{{ route('cost.excel') }}">Download Excel</a></h7>
-                            <div class="pull-right">
-                                <form role="form" method="GET" action="{{ URL::route('cost.search') }}">
-                                    <button type="submit" class="btn btn-block btn-default btn-flat">Search</button>
-                                </form>
+                            <h3 class="box-title">Search Roles</h3>
+                            <div class="input-group" style="margin-top: 0.5%">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input type="text" class="search form-control" placeholder="What you looking for?">
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -39,34 +36,26 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="example2" class="table table-bordered table-hover dataTable"
+                                        <table id="example2" class="table table-bordered table-hover dataTable results"
                                                role="grid" aria-describedby="example2_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th>
-                                                        Name <a href="{{ route('cost.indexNameAscending') }}"
-                                                                style="margin-left:1%;margin-right:1% "><i
-                                                                    class="fa fa-sort-up"></i> </a>
-                                                        <a href="{{ route('cost.indexNameDescending') }}"><i
-                                                                    class="fa fa-sort-alpha-desc"></i> </a>
-                                                    </th>
-                                                    <th>Cost</th>
-                                                    <th>Company</th>
+                                                    <th>Id</th>
+                                                    <th>Role</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($costs as $cost)
+                                                @foreach($roles as $role)
                                                     <tr>
-                                                        <td>{{ $cost->name }}</td>
-                                                        <td>{{ $cost->cost }}</td>
-                                                        <td>{{ $cost->company->name }}</td>
+                                                        <td>{{ $role->id }}</td>
+                                                        <td>{{ $role->name }}</td>
                                                         <td>
                                                             <form role="form" method="GET"
-                                                                  action="{{ URL::route('cost.edit') }}">
+                                                                  action="{{ URL::route('role.edit') }}">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" name="id" value="{{ $cost->id }}">
+                                                                <input type="hidden" name="id" value="{{ $role->id }}">
                                                                 <button type="submit" class="btn btn-warning"><span
                                                                             class="glyphicon glyphicon-edit"></span>
                                                                 </button>
@@ -74,9 +63,9 @@
                                                         </td>
                                                         <td>
                                                             <form role="form" method="POST"
-                                                                  action="{{ URL::route('cost.destroy') }}">
+                                                                  action="{{ URL::route('role.destroy') }}">
                                                                 {{ csrf_field() }}
-                                                                <input type="hidden" name="id" value="{{ $cost->id }}">
+                                                                <input type="hidden" name="id" value="{{ $role->id }}">
                                                                 <button type="submit" class="btn btn-danger"><span
                                                                             class="glyphicon glyphicon-remove"></span>
                                                                 </button>
@@ -87,9 +76,8 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th rowspan="1" colspan="1">Name</th>
-                                                    <th rowspan="1" colspan="1">Cost</th>
-                                                    <th rowspan="1" colspan="1">Company</th>
+                                                    <th rowspan="1" colspan="1">Id</th>
+                                                    <th rowspan="1" colspan="1">Role</th>
                                                     <th rowspan="1" colspan="1">Edit</th>
                                                     <th rowspan="1" colspan="1">Delete</th>
                                                 </tr>
@@ -99,13 +87,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <div class="dataTables_info" id="example2_info" role="status"
-                                             aria-live="polite">Showing 1 to 10 of {{ $costs->count() }} entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                            <?php echo $costs->render(); ?>
+                                        <div class="dataTables_info" id="example2_info" role="status">
                                         </div>
                                     </div>
                                 </div>

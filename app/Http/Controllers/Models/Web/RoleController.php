@@ -22,6 +22,13 @@ class RoleController extends Controller
         ]);
     }
 
+    public function search()
+    {
+        return view('role.search', [
+            'roles' => Role::all()
+        ]);
+    }
+
     public function indexNameAscending()
     {
         return view('role.index', [

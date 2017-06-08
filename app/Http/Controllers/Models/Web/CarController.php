@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Models\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Car\EditDeleteCarRequest;
 use App\Http\Requests\Car\StoreUpdateCarRequest;
-use App\Http\Requests\Route\EditDeleteRouteRequest;
 use App\Models\Car;
 use App\Models\Route;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -167,7 +167,10 @@ class CarController extends Controller
             {
                 $car = new Car;
                 $car->licence_plate = $request->licence_plate;
-                $car->user_id = $request->user_id;
+
+                $user = User::find($request->user_id);
+                $car->user()->associate($user);
+
                 $car->save();
 
                 return redirect()->route('car.index');
@@ -177,7 +180,10 @@ class CarController extends Controller
         {
             $car = new Car;
             $car->licence_plate = $request->licence_plate;
-            $car->user_id = $request->user_id;
+
+            $user = User::find($request->user_id);
+            $car->user()->associate($user);
+
             $car->save();
 
             return redirect()->route('car.index');
@@ -199,28 +205,26 @@ class CarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Request $request
+     * @param EditDeleteCarRequest|Request $request
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit(EditDeleteRouteRequest $request)
+    public function edit(EditDeleteCarRequest $request)
     {
         if (Auth::user()->role_id == 2)
         {
-            $car = Car::find($request->id);
-            $users = User::where('company_id', Auth::user()->company_id)->get();
-
             return view('car.edit', [
-                'car' => $car,
-                'users' => $users
+                'car' => Car::find($request->id),
+                'users' => User::where('company_id', Auth::user()->company_id)->get()
             ]);
         }
         else if (Auth::user()->role_id == 3)
         {
             $car = Car::find($request->id);
+
             return view('car.edit', [
                 'car' => $car,
-                'users' => User::where('id', $car->user_id)->get()
+                'users' => User::where('company_id', $car->user->company->id)->get()
             ]);
         }
     }
@@ -228,9 +232,9 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param StoreUpdateCarRequest|Request $request
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function update(StoreUpdateCarRequest $request)
     {
@@ -246,7 +250,10 @@ class CarController extends Controller
             {
                 $car = Car::find($request->id);
                 $car->licence_plate = $request->licence_plate;
-                $car->user_id = $request->user_id;
+
+                $user = User::find($request->user_id);
+                $car->user()->associate($user);
+
                 $car->save();
 
                 return redirect()->route('car.index');
@@ -256,7 +263,10 @@ class CarController extends Controller
         {
             $car = Car::find($request->id);
             $car->licence_plate = $request->licence_plate;
-            $car->user_id = $request->user_id;
+
+            $user = User::find($request->user_id);
+            $car->user()->associate($user);
+
             $car->save();
 
             return redirect()->route('car.index');
@@ -270,7 +280,7 @@ class CarController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function destroy(EditDeleteRouteRequest $request)
+    public function destroy(EditDeleteCarRequest $request)
     {
         if (Auth::user()->role_id == 2)
         {

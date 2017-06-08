@@ -63,7 +63,7 @@
 
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select class="form-control" name="country" >
+                                    <select class="form-control selectpicker" data-live-search="true" name="country">
                                         @foreach($countries as $country)
                                             <option value="{{ $country->name }}">{{ $country->name }}</option>
                                         @endforeach

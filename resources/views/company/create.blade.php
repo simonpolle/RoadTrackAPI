@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select class="form-control" name="country" >
+                                    <select class="form-control selectpicker" data-live-search="true" name="country">
                                         @foreach($countries as $country)
                                             <option value="{{ $country->name }}">{{ $country->name }}</option>
                                         @endforeach
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>User (Admin)</label>
-                                    <select class="form-control" name="user_id" >
+                                    <select class="form-control selectpicker" data-live-search="true" name="user_id">
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
                                         @endforeach

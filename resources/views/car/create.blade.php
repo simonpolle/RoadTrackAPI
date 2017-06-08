@@ -38,15 +38,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label>User</label>
-                                    <select class="form-control" name="user_id">
+                                    <select class="form-control selectpicker" data-live-search="true" name="user_id">
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                             <!-- /.box-body -->
-
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>

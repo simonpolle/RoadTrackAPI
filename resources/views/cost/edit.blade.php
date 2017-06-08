@@ -53,7 +53,8 @@
                                 <div class="form-group">
                                     @if(sizeof($companies) > 1)
                                         <label>Company</label>
-                                        <select class="form-control" name="company_id">
+                                        <select class="form-control selectpicker" data-live-search="true"
+                                                name="company_id">
                                             @foreach($companies as $company)
                                                 <option value="{{ $company->id }}">{{ $company->name }}</option>
                                             @endforeach

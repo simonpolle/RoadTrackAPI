@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Role</label>
-                                    <select class="form-control" name="role_id">
+                                    <select class="form-control selectpicker" data-live-search="true" name="role_id">
                                         @foreach($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
@@ -85,7 +85,8 @@
                                 @if(Auth::user()->role_id == 3)
                                     <div class="form-group">
                                         <label>Company</label>
-                                        <select class="form-control" name="company_id">
+                                        <select class="form-control selectpicker" data-live-search="true"
+                                                name="company_id">
                                             @foreach($companies as $company)
                                                 <option value="{{ $company->id }}">{{ $company->name }}</option>
                                             @endforeach

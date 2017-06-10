@@ -61,7 +61,8 @@
                                                 <div class="description-block">
                                                     <h5 class="description-header">
                                                         € {{ number_format($route->total_cost, 2) }}</h5>
-                                                    <span class="description-text">TOTAL COST</span>
+                                                    <span class="description-text">TOTAL COST ({{ $route->cost->name }}
+                                                        )</span>
                                                 </div>
                                                 <!-- /.description-block -->
                                             </div>

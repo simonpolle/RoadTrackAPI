@@ -31,8 +31,16 @@ $router->group(['prefix' => 'route', 'namespace' => 'Models\Api'], function () u
 });
 
 /*
- * Routes routes
+ * Car routes
  */
 $router->group(['prefix' => 'car', 'namespace' => 'Models\Api'], function () use ($router) {
     $router->get('/{id}', 'CarController@getById')->name('car.getById');
+});
+
+/*
+ * Location routes
+ */
+$router->group(['prefix' => 'location', 'namespace' => 'Models\Api'], function () use ($router)
+{
+    $router->post('/create', 'LocationController@create')->name('location.create');
 });

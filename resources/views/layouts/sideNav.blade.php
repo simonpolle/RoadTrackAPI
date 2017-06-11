@@ -126,14 +126,6 @@
                     </ul>
                 </li>
             @endif
-
-            <li class="treeview">
-                <a href="{{ route('settings.index') }}">
-                    <i class="fa fa-dashboard"></i> <span>Settings</span>
-                    <span class="pull-right-container">
-                    </span>
-                </a>
-            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

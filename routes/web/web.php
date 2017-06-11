@@ -137,12 +137,3 @@ $router->group(['prefix' => 'user', 'namespace' => 'Models\Web', 'middleware' =>
     $router->post('update', 'UserController@update')->name('user.update');
     $router->post('destroy', 'UserController@destroy')->name('user.destroy');
 });
-
-/*
- * Settings routes
- */
-$router->group(['prefix' => 'settings', 'namespace' => 'Models\Web', 'middleware' => ['company']], function () use ($router)
-{
-    $router->get('/', 'SettingsController@index')->name('settings.index');
-    $router->post('update', 'SettingsController@update')->name('settings.update');
-});

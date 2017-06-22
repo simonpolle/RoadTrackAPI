@@ -203,12 +203,17 @@ class UserController extends Controller
         $user = User::find($request->id);
         $routes = Route::where('user_id', $user->id)->whereMonth('created_at', '=', Carbon::now()->month)->get();
         $total_costs = $routes->sum('total_cost');
+        $cost_type = "No cost specified";
+        if (sizeof($routes) > 0)
+        {
+            $cost_type = $routes->first()->cost->name;
+        }
 
         return view('user.details', [
             'user' => $user,
             'routes' => $routes,
             'total_costs' => $total_costs,
-            'cost_type' => $routes->first()->cost->name,
+            'cost_type' => $cost_type,
         ]);
     }
 

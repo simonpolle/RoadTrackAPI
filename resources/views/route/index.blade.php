@@ -133,7 +133,11 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                            <?php echo $routes->render(); ?>
+                                            @if(empty($coordinates))
+                                                <p>no locations found</p>
+                                            @else
+                                                <?php echo $routes->render(); ?>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

@@ -50,7 +50,7 @@
                                             <!-- /.col -->
                                             <div class="col-sm-3 border-right">
                                                 <div class="description-block">
-                                                    <h5 class="description-header">{{ $route->distance_travelled }}
+                                                    <h5 class="description-header">{{  number_format($route->distance_travelled , 2)}}
                                                         km</h5>
                                                     <span class="description-text">DISTANCE TRAVELLED</span>
                                                 </div>

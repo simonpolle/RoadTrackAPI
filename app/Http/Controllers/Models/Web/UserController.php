@@ -47,7 +47,7 @@ class UserController extends Controller
     {
         if (Auth::user()->role_id == 2)
         {
-            $users = User::where('company_id', Auth::user()->company_id)->get(10);
+            $users = User::where('company_id', Auth::user()->company_id)->get();
             return view('user.search', [
                 'users' => $users,
             ]);

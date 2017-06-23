@@ -45,6 +45,7 @@
                                                     <th>Email</th>
                                                     <th>Role</th>
                                                     <th>Company</th>
+                                                    <th>Details</th>
                                                     <th>Edit</th>
                                                     <th>Delete</th>
                                                 </tr>
@@ -66,6 +67,17 @@
                                                         @else
                                                             <td>None</td>
                                                         @endif
+                                                        <td>
+                                                            <form role="form" method="GET"
+                                                                  action="{{ route('user.details') }}">
+                                                                {{ csrf_field() }}
+                                                                <input type="hidden" name="id"
+                                                                       value="{{ $user->id }}">
+                                                                <button type="submit" class="btn btn-info"><span
+                                                                            class="glyphicon glyphicon-list-alt"></span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
                                                         <td>
                                                             <form role="form" method="GET"
                                                                   action="{{ URL::route('user.edit') }}">
@@ -96,6 +108,7 @@
                                                     <th rowspan="1" colspan="1">Email</th>
                                                     <th rowspan="1" colspan="1">Role</th>
                                                     <th rowspan="1" colspan="1">Company</th>
+                                                    <th rowspan="1" colspan="1">Details</th>
                                                     <th rowspan="1" colspan="1">Edit</th>
                                                     <th rowspan="1" colspan="1">Delete</th>
                                                 </tr>

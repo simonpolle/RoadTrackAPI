@@ -222,28 +222,38 @@ class RouteController extends Controller
         });
 
         $coordinates = implode('|', $coordinates->toArray());
-
-        $guzzleClient = new \GuzzleHttp\Client();
-        $url = sprintf('https://roads.googleapis.com/v1/snapToRoads?path=%s&interpolate=true&key=%s', $coordinates, env('GOOGLE_API_KEY'));
-
-        $res = $guzzleClient->requestAsync('GET', $url)->wait();
-        $res = json_decode((string)$res->getBody());
-
-        $coordinates = array_map(function ($point)
+        if (empty($coordinates))
         {
-            return (object)$point->location;
-        }, $res->snappedPoints);
+            return view('route.details', [
+                'route' => $route,
+                'coordinates' => $coordinates,
+                'firstLocation' => "",
+            ]);
+        }
+        else
+        {
+            $guzzleClient = new \GuzzleHttp\Client();
+            $url = sprintf('https://roads.googleapis.com/v1/snapToRoads?path=%s&interpolate=true&key=%s', $coordinates, env('GOOGLE_API_KEY'));
 
-        $json = json_encode($coordinates);
-        $json = str_replace("latitude", "lat", $json);
-        $json = str_replace("longitude", "lng", $json);
-        $coordinates = json_decode($json);
+            $res = $guzzleClient->requestAsync('GET', $url)->wait();
+            $res = json_decode((string)$res->getBody());
 
-        return view('route.details', [
-            'route' => $route,
-            'coordinates' => $coordinates,
-            'firstLocation' => $coordinates[0],
-        ]);
+            $coordinates = array_map(function ($point)
+            {
+                return (object)$point->location;
+            }, $res->snappedPoints);
+
+            $json = json_encode($coordinates);
+            $json = str_replace("latitude", "lat", $json);
+            $json = str_replace("longitude", "lng", $json);
+            $coordinates = json_decode($json);
+
+            return view('route.details', [
+                'route' => $route,
+                'coordinates' => $coordinates,
+                'firstLocation' => $coordinates[0],
+            ]);
+        }
     }
 
     /**
@@ -267,8 +277,9 @@ class RouteController extends Controller
                 $route->user_id = $request->user_id;
                 $car = DB::table('cars')->where('user_id', $request->user_id)->first();
                 $route->car_id = $car->id;
-                $route->distance_travelled = $request->distance_travelled;
-                $route->total_cost = $request->total_cost;
+                $route->distance_travelled = number_format($request->distance_travelled, 2);
+                $route->total_cost = number_format($request->total_cost, 2);
+                $route->cost_id = $request->cost_id;
                 $route->save();
 
                 return redirect()->route('route.index');
@@ -282,6 +293,7 @@ class RouteController extends Controller
             $route->car_id = $car->id;
             $route->distance_travelled = $request->distance_travelled;
             $route->total_cost = $request->total_cost;
+            $route->cost_id = $request->cost_id;
             $route->save();
 
             return redirect()->route('route.index');
